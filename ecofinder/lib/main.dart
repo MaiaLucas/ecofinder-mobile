@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       systemNavigationBarColor: darkModeOn ? Colors.black : Colors.white,
     ));
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Ecofinder',
       theme: ThemeData(
         primarySwatch: Colors.green,

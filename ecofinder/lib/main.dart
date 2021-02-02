@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 bool darkModeOn =
     SchedulerBinding.instance.window.platformBrightness == Brightness.dark;

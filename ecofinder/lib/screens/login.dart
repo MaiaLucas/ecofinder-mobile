@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
+
+import '../widgets/icon.dart';
+import '../widgets/adaptative_text_field.dart';
+import '../widgets/sign_button.dart';
+import '../widgets/login_button.dart';
+import '../widgets/app_label.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -13,65 +18,26 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
+    return Scaffold(
+      body: Container(
         decoration: BoxDecoration(color: Colors.black),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: ListView(
+          padding: EdgeInsets.only(top: 70, left: 30, right: 30),
           children: [
-            Text(
-              'Ícone!',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-              ),
+            AppIcon(),
+            AppLabel(),
+            AdaptativeTextField(
+              label: 'Usuário',
+              controller: _userController,
+              onSubmitted: null,
             ),
-            Text(
-              'Ecofinder',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-              ),
+            AdaptativeTextField(
+              label: 'Senha',
+              controller: _passwordController,
+              onSubmitted: null,
             ),
-            Platform.isIOS
-                ? CupertinoTextField(
-                    controller: _userController,
-                    placeholder: 'Usuário',
-                  )
-                : TextField(
-                    controller: _userController,
-                    decoration: InputDecoration(labelText: 'Usuário'),
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-            Platform.isIOS
-                ? CupertinoTextField(
-                    controller: _passwordController,
-                    placeholder: 'Senha',
-                  )
-                : TextField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(labelText: 'Senha'),
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-            Platform.isIOS
-                ? CupertinoButton(
-                    color: Colors.green,
-                    child: Text('Entrar'),
-                    onPressed: null,
-                  )
-                : FloatingActionButton(
-                    backgroundColor: Colors.green,
-                    child: Text('Entrar'),
-                    onPressed: null,
-                  ),
-            Text(
-              'Novo aqui? Crie sua conta!',
-              style: TextStyle(color: Colors.white, fontSize: 12),
-            )
+            LoginButton(),
+            SignButton(),
           ],
         ),
       ),

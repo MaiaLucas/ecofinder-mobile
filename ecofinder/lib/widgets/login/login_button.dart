@@ -1,3 +1,4 @@
+import 'package:ecofinder/services/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -19,7 +20,11 @@ class LoginButton extends StatelessWidget {
         : Container(
             padding: EdgeInsets.only(top: 10, bottom: 10),
             child: RaisedButton(
-              onPressed: () {},
+              onPressed: () {
+                String email = "api@ecofinder.com";
+                String password = "AP1@ecofinder";
+                ApiService.signIn(email, password);
+              },
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(80),
               ),

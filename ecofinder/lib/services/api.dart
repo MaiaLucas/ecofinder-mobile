@@ -27,15 +27,15 @@ class ApiService {
       case 200:
         print(json.decode(response.body));
         return LoginResponseModel.fromJson(
-        json.decode(response.body),
-      );
+          json.decode(response.body),
+        );
         break;
       case 400:
       case 401:
         print(json.decode(response.body));
         return LoginResponseModel.fromJson(
-        json.decode(response.body),
-      );
+          json.decode(response.body),
+        );
         break;
       default:
         print('error');

@@ -17,45 +17,42 @@ class LoginButton extends StatelessWidget {
             child: Text(label),
             onPressed: onPressed,
           )
-        : Container(
-            padding: EdgeInsets.only(top: 10, bottom: 10),
-            child: RaisedButton(
-              onPressed: () {
-                String email = "api@ecofinder.com";
-                String password = "AP1@ecofinder";
-                ApiService.signIn(email, password);
-              },
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(80),
-              ),
-              padding: const EdgeInsets.all(0),
-              child: Ink(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: <Color>[
-                      Colors.teal,
-                      Colors.green,
-                      Colors.teal,
-                    ],
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(40),
-                  ),
+        : RaisedButton(
+            onPressed: () {
+              String email = "api@ecofinder.com";
+              String password = "AP1@ecofinder";
+              ApiService.signIn(email, password);
+            },
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(80),
+            ),
+            padding: const EdgeInsets.all(0),
+            child: Ink(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: <Color>[
+                    Colors.teal,
+                    Colors.green,
+                    Colors.teal,
+                  ],
                 ),
-                child: Container(
-                  constraints: const BoxConstraints(
-                    minWidth: 88,
-                    minHeight: 36,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(40),
+                ),
+              ),
+              child: Container(
+                constraints: const BoxConstraints(
+                  minWidth: 150,
+                  minHeight: 50,
+                ),
+                alignment: Alignment.center,
+                child: const Text(
+                  'Entrar',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
                   ),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Entrar',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),

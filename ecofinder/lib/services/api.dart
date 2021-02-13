@@ -1,10 +1,9 @@
 import 'dart:convert';
-import 'package:ecofinder/models/login_model.dart';
 import 'package:http/http.dart' as http;
 
 class URLS {
-  static const String BASE_URL = 'http://192.168.0.45:8888';
-  //'https://ecofinder-api.herokuapp.com';
+  // static const String BASE_URL = 'http://192.168.0.45:8888';
+  static const String BASE_URL = 'https://ecofinder-api.herokuapp.com';
 }
 
 class ApiService {
@@ -17,28 +16,23 @@ class ApiService {
     }
   }
 
-  static Future<LoginResponseModel> signIn(
-      String email, String password) async {
-    final response = await http.post("${URLS.BASE_URL}/signin",
-        headers: {"content-type": "application/json"},
-        body: jsonEncode({"email": email, "password": password}));
+  static Future<dynamic> signIn(data) async {
+    final response = await http.post(
+      "${URLS.BASE_URL}/signin",
+      body: jsonEncode(data),
+      headers: {"Content-Type": "application/json"},
+    );
 
-    switch (response.statusCode) {
-      case 200:
-        print(json.decode(response.body));
-        return LoginResponseModel.fromJson(
-          json.decode(response.body),
-        );
-        break;
-      case 400:
-      case 401:
-        print(json.decode(response.body));
-        return LoginResponseModel.fromJson(
-          json.decode(response.body),
-        );
-        break;
-      default:
-        print('error');
-    }
+    return response;
+  }
+
+  static Future<dynamic> signUp(data) async {
+    final response = await http.post(
+      "${URLS.BASE_URL}/signup",
+      body: jsonEncode(data),
+      headers: {"Content-Type": "application/json"},
+    );
+
+    return response;
   }
 }

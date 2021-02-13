@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:ecofinder/services/api.dart';
+import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,20 +13,34 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  _submitForm() {
+  _submitForm(BuildContext context) {
     final email = _emailController.text;
     final password = _passwordController.text;
 
-    print(email);
-    print(password);
+    ApiService.signIn({"email": email, "password": password}).then((res) {
+      var data = jsonDecode(res.body);
+
+      if (res.statusCode != 200) {
+        final snackBar = SnackBar(
+          content: Text(data['message']),
+          backgroundColor: Colors.red,
+        );
+        _scaffoldKey.currentState.showSnackBar(snackBar);
+      } else {
+        Navigator.pushNamed(context, Routes.DASHBOARD);
+      }
+    });
   }
 
   bool notVisible = true;
+  bool emailLength = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         color: Colors.black54,
         child: Padding(
@@ -43,13 +61,20 @@ class _LoginState extends State<Login> {
               SizedBox(height: 50),
               TextField(
                 controller: _emailController,
+                onChanged: (value) {
+                  setState(() {
+                    emailLength = value.length > 0 ? true : false;
+                  });
+                },
                 decoration: InputDecoration(
                   labelText: 'E-mail',
                   border: OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    onPressed: () => _emailController.clear(),
-                    icon: Icon(Icons.clear),
-                  ),
+                  suffixIcon: emailLength
+                      ? IconButton(
+                          onPressed: () => _emailController.clear(),
+                          icon: Icon(Icons.clear),
+                        )
+                      : null,
                 ),
               ),
               SizedBox(height: 10),
@@ -74,14 +99,24 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('Cadastre-se'),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          Routes.REGISTER
+                        );
+                      },
+                      child: Text('Cadastre-se'),
+                    ),
                     ButtonTheme(
                       minWidth: 100,
                       height: 50,
                       child: RaisedButton(
                         padding: const EdgeInsets.all(5),
                         color: Colors.teal[500],
-                        onPressed: _submitForm,
+                        onPressed: () {
+                          _submitForm(context);
+                        },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),

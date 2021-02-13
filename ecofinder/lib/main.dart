@@ -1,7 +1,8 @@
+import 'package:ecofinder/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './utils/routes.dart';
-import './screens/login.dart';
+import './screens/home.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,7 +22,9 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         brightness: Brightness.dark,
       ),
+      initialRoute: '/',
       routes: {
+        Routes.HOME: (ctx) => Home(),
         Routes.LOGIN: (ctx) => Login(),
       },
     );

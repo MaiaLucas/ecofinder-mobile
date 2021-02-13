@@ -1,4 +1,5 @@
 class Routes {
-  static const LOGIN = '/';
+  static const HOME = '/';
+  static const LOGIN = '/login';
   static const TESTE = '/';
 }

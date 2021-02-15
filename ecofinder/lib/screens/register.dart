@@ -26,10 +26,10 @@ class _RegisterState extends State<Register> {
     final lastName = _lastNameController.text;
 
     ApiService.signUp({
-      "email": email, 
-      "password": password, 
-      "first_name": firstName, 
-      "last_name": lastName, 
+      "email": email,
+      "password": password,
+      "first_name": firstName,
+      "last_name": lastName,
       "confirmPassword": confirmPassword
     }).then((res) {
       var data = jsonDecode(res.body);
@@ -47,121 +47,131 @@ class _RegisterState extends State<Register> {
   }
 
   bool notVisible = true;
+  bool notVisible2 = true;
   bool emailLength = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: Container(
-        color: Colors.black54,
-        child: Padding(
-          padding: const EdgeInsets.all(40),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: 100,
-                width: 300,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/ecofinderlogo.png"),
-                    fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
+        child: Container(
+          color: Colors.black54,
+          height: MediaQuery.of(context).size.height,
+          child: Padding(
+            padding: const EdgeInsets.all(40),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 100,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/ecofinderlogo.png"),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 50),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Flexible(
-                    child: TextField(
-                      controller: _firstNameController,
-                      decoration: InputDecoration(
-                        labelText: 'Nome',
-                        border: OutlineInputBorder()
+                SizedBox(height: 50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: TextField(
+                        controller: _firstNameController,
+                        decoration: InputDecoration(
+                            labelText: 'Nome', border: OutlineInputBorder()),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 10),
-                  Flexible(
-                    child: TextField(
-                      controller: _lastNameController,
-                      decoration: InputDecoration(
-                        labelText: 'Sobrenome',
-                        border: OutlineInputBorder()
+                    SizedBox(width: 10),
+                    Flexible(
+                      child: TextField(
+                        controller: _lastNameController,
+                        decoration: InputDecoration(
+                            labelText: 'Sobrenome',
+                            border: OutlineInputBorder()),
                       ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 10),
-              TextField(
-                controller: _emailController,
-                onChanged: (value) {
-                  setState(() {
-                    emailLength = value.length > 0 ? true : false;
-                  });
-                },
-                decoration: InputDecoration(
-                  labelText: 'E-mail',
-                  border: OutlineInputBorder(),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10),
+                TextField(
+                  controller: _emailController,
+                  onChanged: (value) {
+                    setState(() {
+                      emailLength = value.length > 0 ? true : false;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'E-mail',
+                    border: OutlineInputBorder(),
                     suffixIcon: emailLength
                         ? IconButton(
                             onPressed: () => _emailController.clear(),
                             icon: Icon(Icons.clear),
                           )
                         : null,
-                ),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                controller: _passwordController,
-                obscureText: notVisible,
-                decoration: InputDecoration(
-                  labelText: 'Senha',
-                  border: OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() => notVisible = !notVisible);
-                    },
-                    icon: Icon(
-                        notVisible ? Icons.visibility_off : Icons.visibility),
                   ),
                 ),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                controller: _confirmPasswordController,
-                obscureText: notVisible,
-                decoration: InputDecoration(
-                  labelText: 'Senha',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 10),
-              ButtonTheme(
-                minWidth: 400,
-                height: 50,
-                child: RaisedButton(
-                  padding: const EdgeInsets.all(5),
-                  color: Colors.teal[500],
-                  onPressed: () {
-                    _submitForm(context);
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    'Entrar',
-                    style: TextStyle(
-                      fontSize: 25,
+                SizedBox(height: 10),
+                TextField(
+                  controller: _passwordController,
+                  obscureText: notVisible,
+                  decoration: InputDecoration(
+                    labelText: 'Senha',
+                    border: OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() => notVisible = !notVisible);
+                      },
+                      icon: Icon(
+                          notVisible ? Icons.visibility_off : Icons.visibility),
                     ),
                   ),
                 ),
-              ),
-            ],
+                SizedBox(height: 10),
+                TextField(
+                  controller: _confirmPasswordController,
+                  obscureText: notVisible2,
+                  decoration: InputDecoration(
+                    labelText: 'Confirmar senha',
+                    border: OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() => notVisible2 = !notVisible2);
+                      },
+                      icon: Icon(notVisible2
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                ButtonTheme(
+                  minWidth: 400,
+                  height: 50,
+                  child: RaisedButton(
+                    padding: const EdgeInsets.all(5),
+                    color: Colors.teal[500],
+                    onPressed: () {
+                      _submitForm(context);
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      'Cadastrar',
+                      style: TextStyle(
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

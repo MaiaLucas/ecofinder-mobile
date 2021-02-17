@@ -47,7 +47,6 @@ class _RegisterState extends State<Register> {
   }
 
   bool notVisible = true;
-  bool notVisible2 = true;
   bool emailLength = false;
 
   @override
@@ -135,15 +134,15 @@ class _RegisterState extends State<Register> {
                 SizedBox(height: 10),
                 TextField(
                   controller: _confirmPasswordController,
-                  obscureText: notVisible2,
+                  obscureText: notVisible,
                   decoration: InputDecoration(
                     labelText: 'Confirmar senha',
                     border: OutlineInputBorder(),
                     suffixIcon: IconButton(
                       onPressed: () {
-                        setState(() => notVisible2 = !notVisible2);
+                        setState(() => notVisible = !notVisible);
                       },
-                      icon: Icon(notVisible2
+                      icon: Icon(notVisible
                           ? Icons.visibility_off
                           : Icons.visibility),
                     ),

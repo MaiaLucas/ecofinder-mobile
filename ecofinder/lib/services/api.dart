@@ -42,6 +42,12 @@ class ApiService {
 
   //CARREGA AS INFORMAÇÕES DO DASHBOARD
 
+  /**
+   * seção 2 -> get por eco-xp (destaques)
+   *  
+   * seção 4 -> get por e-coleta (destaques)
+   */
+
   static Future<dynamic> loadInfo() async {
     final response = await http.get("${URLS.BASE_URL}/place");
     if (response.statusCode == 200) {

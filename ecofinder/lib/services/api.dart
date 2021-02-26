@@ -40,16 +40,10 @@ class ApiService {
     return response;
   }
 
-  //CARREGA AS INFORMAÇÕES DO DASHBOARD
+  //CARREGA AS INFORMAÇÕES QUE APARECERÃO NO DASHBOARD
 
-  /**
-   * seção 2 -> get por eco-xp (destaques)
-   *  
-   * seção 4 -> get por e-coleta (destaques)
-   */
-
-  static Future<dynamic> loadInfo() async {
-    final response = await http.get("${URLS.BASE_URL}/place");
+  static Future<dynamic> loadPlaces() async {
+    final response = await http.get("${URLS.BASE_URL}/place/rating");
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {

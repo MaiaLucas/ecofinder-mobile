@@ -1,10 +1,6 @@
 import 'dart:convert';
+import 'package:ecofinder/services/urls.dart';
 import 'package:http/http.dart' as http;
-
-class URLS {
-  static const String BASE_URL = 'http://192.168.0.45:8888';
-  // static const String BASE_URL = 'https://ecofinder-api.herokuapp.com';
-}
 
 class ApiService {
   static Future<List<dynamic>> getUser() async {
@@ -41,15 +37,10 @@ class ApiService {
   }
 
   //CARREGA AS INFORMAÇÕES DO DASHBOARD
+  static Future<dynamic> loadDashboardInfo() async {
+    print('ok');
 
-  /**
-   * seção 2 -> get por eco-xp (destaques)
-   *  
-   * seção 4 -> get por e-coleta (destaques)
-   */
-
-  static Future<dynamic> loadInfo() async {
-    final response = await http.get("${URLS.BASE_URL}/place");
+    final response = await http.get("${URLS.BASE_URL}/dashboard");
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {

@@ -21,11 +21,14 @@ class DashboardHomeItem extends StatelessWidget {
           height: 60,
           width: 70,
           alignment: Alignment.center,
-          child: Image.network(
-            this.image,
-            height: MediaQuery.of(context).size.height * 0.5,
-            width: double.infinity,
-            fit: BoxFit.cover,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.network(
+              this.image,
+              height: MediaQuery.of(context).size.height * 0.5,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         Container(

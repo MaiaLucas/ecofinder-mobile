@@ -59,7 +59,7 @@ class DashboardHomeItem extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 5),
+                padding: const EdgeInsets.only(left: 5, bottom: 3),
                 child: Row(
                   children: [
                     Icon(

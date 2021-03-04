@@ -2,8 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DashboardHomeItem extends StatelessWidget {
+  final String image;
+  final String name;
+  final String rating;
+
   const DashboardHomeItem({
     Key key,
+    @required this.image,
+    @required this.name,
+    @required this.rating,
   }) : super(key: key);
 
   @override
@@ -13,7 +20,13 @@ class DashboardHomeItem extends StatelessWidget {
         Container(
           height: 60,
           width: 70,
-          color: Colors.red,
+          alignment: Alignment.center,
+          child: Image.network(
+            this.image,
+            height: MediaQuery.of(context).size.height * 0.5,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
         ),
         Container(
           width: MediaQuery.of(context).size.width * 0.27,
@@ -24,7 +37,7 @@ class DashboardHomeItem extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.only(left: 5, bottom: 5),
                   child: Text(
-                    'Nome do local número 1',
+                    this.name,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: TextStyle(
@@ -45,7 +58,7 @@ class DashboardHomeItem extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 3, top: 2),
                       child: Text(
-                        '4.6',
+                        this.rating,
                         style: TextStyle(
                           fontSize: 15,
                         ),

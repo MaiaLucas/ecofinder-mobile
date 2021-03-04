@@ -2,7 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DashboardMainItem extends StatelessWidget {
+  final String image;
+  final String name;
+  final String rating;
+
   const DashboardMainItem({
+    @required this.image,
+    @required this.name,
+    @required this.rating,
     Key key,
   }) : super(key: key);
 
@@ -13,7 +20,7 @@ class DashboardMainItem extends StatelessWidget {
         Container(
           alignment: Alignment.center,
           child: Image.network(
-            "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+            this.image,
             height: MediaQuery.of(context).size.height * 0.5,
             width: double.infinity,
             fit: BoxFit.cover,
@@ -23,8 +30,15 @@ class DashboardMainItem extends StatelessWidget {
           bottom: 10,
           left: 15,
           child: Text(
-            'Nome do local',
+            this.name,
             style: TextStyle(
+              shadows: [
+                Shadow(
+                  color: Colors.black87,
+                  offset: Offset(3, 2),
+                  blurRadius: 0,
+                ),
+              ],
               fontWeight: FontWeight.bold,
               fontSize: 25,
             ),
@@ -44,9 +58,16 @@ class DashboardMainItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 3, top: 2),
                 child: Text(
-                  '5.0',
+                  this.rating,
                   style: TextStyle(
                     fontSize: 20,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black87,
+                        offset: Offset(3, 2),
+                        blurRadius: 0,
+                      ),
+                    ],
                   ),
                 ),
               ),

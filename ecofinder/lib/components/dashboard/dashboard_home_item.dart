@@ -20,6 +20,15 @@ class DashboardHomeItem extends StatelessWidget {
         Container(
           height: 60,
           width: 70,
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black45,
+                blurRadius: 4,
+                offset: Offset(2, 1),
+              ),
+            ],
+          ),
           alignment: Alignment.center,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12),

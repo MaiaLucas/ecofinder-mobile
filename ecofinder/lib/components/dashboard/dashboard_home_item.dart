@@ -1,3 +1,4 @@
+import 'package:ecofinder/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +34,7 @@ class DashboardHomeItem extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.network(
-              this.image,
+              this.image.length > 1 ? this.image : Constants.NO_IMAGE,
               height: MediaQuery.of(context).size.height * 0.5,
               width: double.infinity,
               fit: BoxFit.cover,

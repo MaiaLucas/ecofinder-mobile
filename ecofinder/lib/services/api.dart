@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:async';
-import 'package:ecofinder/models/Highlights.dart';
 import 'package:ecofinder/services/urls.dart';
 import 'package:http/http.dart' as http;
 
@@ -39,10 +38,10 @@ class ApiService {
   }
 
   //CARREGA AS INFORMAÇÕES DO DASHBOARD
-  static Future<Highlights> loadDashboardInfo() async {
-    final response = await http.get("${URLS.BASE_URL}/dashboard?page=5");
+  static Future<dynamic> loadDashboardInfo() async {
+    final response = await http.get("${URLS.BASE_URL}/dashboard?page=7");
     if (response.statusCode == 200) {
-      return Highlights.fromJson(jsonDecode(response.body));
+      return jsonDecode(response.body);
     } else {
       throw Exception('Failed to load album');
     }

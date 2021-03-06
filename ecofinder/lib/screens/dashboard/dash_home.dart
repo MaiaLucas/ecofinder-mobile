@@ -12,7 +12,7 @@ class DashHome extends StatefulWidget {
 }
 
 class _DashHomeState extends State<DashHome> {
-  Future<Highlights> highlights;
+  Future<dynamic> highlights;
 
   @override
   void initState() {
@@ -29,95 +29,103 @@ class _DashHomeState extends State<DashHome> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: ApiService.loadDashboardInfo(),
+      future: highlights,
       builder: (context, snapshot) {
-        print(snapshot);
-        if (snapshot.hasData) {
-          final info = snapshot.data;
-          print(info);
-        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          final dashboardInfo = snapshot.data;
+          final Map<String, dynamic> highlight = dashboardInfo['highlight'];
+          final List<dynamic> top2 = dashboardInfo['top2'];
+          final List<dynamic> experience = dashboardInfo['experience'];
 
-        return Scaffold(
-          body: Column(
-            children: [
-              DashboardMainItem(
-                image:
-                    "https://www.sema.ce.gov.br/wp-content/uploads/sites/36/2019/05/WhatsApp-Image-2019-05-24-at-16.35.42.jpeg",
-                name: "Parque do Cocó",
-                rating: "5.0",
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    DashboardHomeItem(
-                      image:
-                          "https://www.tapisrouge.com.br/wp-content/uploads/2018/07/Parque-Estadual-do-Coc%C3%B3-22-696x465.jpg",
-                      name: "Local em segundo lugar",
-                      rating: "4.7",
-                    ),
-                    DashboardHomeItem(
-                      image:
-                          "https://diariodonordeste.verdesmares.com.br/image/contentid/policy:1.1858894:1590316748/image/image.jpg",
-                      name: "Local em teceiro lugar",
-                      rating: "4.5",
-                    ),
-                  ],
+          return Scaffold(
+            body: Column(
+              children: [
+                // Destaque
+                DashboardMainItem(
+                  image: highlight['imagesUrl'],
+                  name: highlight['title'],
+                  rating: highlight['rating'].toString(),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 40),
-                child: Text(
-                  'Aquele ponto de coleta perfeito!',
-                  style: TextStyle(
-                    fontSize: 20,
+
+                // Top 2
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      DashboardHomeItem(
+                        image: top2[0]['imagesUrl'],
+                        name: top2[0]['title'],
+                        rating: top2[0]['rating'].toString(),
+                      ),
+                      DashboardHomeItem(
+                        image: top2[1]['imagesUrl'],
+                        name: top2[1]['title'],
+                        rating: top2[1]['rating'].toString(),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    DashboardHomeItem(
-                      image:
-                          "https://www.fortaleza.ce.gov.br/images/AscomSeuma/13.10.2017_Escola-Pev-3.jpg",
-                      name: "Melhor local de coleta",
-                      rating: "4.9",
+
+                //Titulo
+                Padding(
+                  padding: const EdgeInsets.only(top: 40),
+                  child: Text(
+                    'Venha ter muitas experiências!',
+                    style: TextStyle(
+                      fontSize: 20,
                     ),
-                    DashboardHomeItem(
-                      image:
-                          "https://veja.abril.com.br/wp-content/uploads/2016/06/ponto-de-coleta-seletiva-em-supermercado-no-rio-de-janeiro-original.jpeg",
-                      name: "Segundo local de coleta",
-                      rating: "4.7",
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    DashboardHomeItem(
-                      image:
-                          "https://images.pexels.com/photos/4503265/pexels-photo-4503265.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                      name: "Terceiro local de coleta",
-                      rating: "4.3",
-                    ),
-                    DashboardHomeItem(
-                      image:
-                          "https://images.pexels.com/photos/4503265/pexels-photo-4503265.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                      name: "Quadragésimo quinto local de coleta",
-                      rating: "3.9",
-                    ),
-                  ],
+
+                // Destaques lista de experiencias
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      DashboardHomeItem(
+                        image: experience[0]['imagesUrl'],
+                        name: experience[0]['title'],
+                        rating: experience[0]['rating'].toString(),
+                      ),
+                      DashboardHomeItem(
+                        image: experience[1]['imagesUrl'],
+                        name: experience[1]['title'],
+                        rating: experience[1]['rating'].toString(),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        );
+
+                // Destaques lista de experiencias
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      DashboardHomeItem(
+                        image: experience[0]['imagesUrl'],
+                        name: experience[0]['title'],
+                        rating: experience[0]['rating'].toString(),
+                      ),
+                      DashboardHomeItem(
+                        image: experience[1]['imagesUrl'],
+                        name: experience[1]['title'],
+                        rating: experience[1]['rating'].toString(),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        } else {
+          return Center(
+              child: CircularProgressIndicator(
+            backgroundColor: Color(0xFFC5C5C5),
+          ));
+        }
       },
     );
   }

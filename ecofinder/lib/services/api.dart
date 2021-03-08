@@ -1,10 +1,7 @@
 import 'dart:convert';
+import 'dart:async';
+import 'package:ecofinder/services/urls.dart';
 import 'package:http/http.dart' as http;
-
-class URLS {
-  static const String BASE_URL = 'http://172.17.0.1:8888';
-  // static const String BASE_URL = 'https://ecofinder-api.herokuapp.com';
-}
 
 class ApiService {
   static Future<List<dynamic>> getUser() async {
@@ -16,6 +13,8 @@ class ApiService {
     }
   }
 
+  // LOGIN
+
   static Future<dynamic> signIn(data) async {
     final response = await http.post(
       "${URLS.BASE_URL}/signin",
@@ -26,6 +25,8 @@ class ApiService {
     return response;
   }
 
+  //CADASTRO
+
   static Future<dynamic> signUp(data) async {
     final response = await http.post(
       "${URLS.BASE_URL}/signup",
@@ -34,5 +35,15 @@ class ApiService {
     );
 
     return response;
+  }
+
+  //CARREGA AS INFORMAÇÕES DO DASHBOARD
+  static Future<dynamic> loadDashboardInfo() async {
+    final response = await http.get("${URLS.BASE_URL}/dashboard?page=7");
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load album');
+    }
   }
 }

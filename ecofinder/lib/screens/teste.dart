@@ -11,11 +11,12 @@ class _EmployeePageState extends State<Teste> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter REST API'),
+        title: Text('Página de testes'),
       ),
       body: FutureBuilder(
-        future: ApiService.getUser(),
+        future: ApiService.loadDashboardInfo(),
         builder: (context, snapshot) {
+          print('entrou');
           final users = snapshot.data;
           if (snapshot.connectionState == ConnectionState.done) {
             print(users);

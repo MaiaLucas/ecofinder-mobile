@@ -34,6 +34,8 @@ class _RegisterState extends State<Register> {
     }).then((res) {
       var data = jsonDecode(res.body);
 
+      print(data);
+
       if (res.statusCode != 200) {
         final snackBar = SnackBar(
           content: Text(data['message']),
@@ -142,9 +144,8 @@ class _RegisterState extends State<Register> {
                       onPressed: () {
                         setState(() => notVisible = !notVisible);
                       },
-                      icon: Icon(notVisible
-                          ? Icons.visibility_off
-                          : Icons.visibility),
+                      icon: Icon(
+                          notVisible ? Icons.visibility_off : Icons.visibility),
                     ),
                   ),
                 ),

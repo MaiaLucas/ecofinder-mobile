@@ -22,6 +22,8 @@ class _LoginState extends State<Login> {
     ApiService.signIn({"email": email, "password": password}).then((res) {
       var data = jsonDecode(res.body);
 
+      print(data);
+
       if (res.statusCode != 200) {
         final snackBar = SnackBar(
           content: Text(data['message']),
@@ -31,6 +33,9 @@ class _LoginState extends State<Login> {
       } else {
         Navigator.pushNamed(context, Routes.DASHBOARD);
       }
+    }).catchError((err) {
+      print('erro');
+      print(err);
     });
   }
 
@@ -101,10 +106,7 @@ class _LoginState extends State<Login> {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          Routes.REGISTER
-                        );
+                        Navigator.pushNamed(context, Routes.REGISTER);
                       },
                       child: Text('Cadastre-se'),
                     ),

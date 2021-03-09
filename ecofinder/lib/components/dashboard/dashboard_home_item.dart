@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DashboardHomeItem extends StatelessWidget {
-  final String image;
+  final dynamic image;
   final String name;
   final String rating;
 
@@ -34,7 +34,9 @@ class DashboardHomeItem extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.network(
-              this.image.length > 1 ? this.image : Constants.NO_IMAGE,
+              this.image?.isEmpty ?? true
+                  ? Constants.NO_IMAGE
+                  : this.image['images'][0]['path'],
               height: MediaQuery.of(context).size.height * 0.5,
               width: double.infinity,
               fit: BoxFit.cover,

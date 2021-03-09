@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DashboardMainItem extends StatelessWidget {
-  final String image;
+  final dynamic image;
   final String name;
   final String rating;
 
@@ -21,7 +21,9 @@ class DashboardMainItem extends StatelessWidget {
         Container(
           alignment: Alignment.center,
           child: Image.network(
-            this.image.length > 1 ? this.image : Constants.NO_IMAGE,
+            this.image['images'].length > 0
+                ? this.image['images'][0]['path']
+                : Constants.NO_IMAGE,
             height: MediaQuery.of(context).size.height * 0.5,
             width: double.infinity,
             fit: BoxFit.cover,

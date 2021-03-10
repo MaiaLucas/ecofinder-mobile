@@ -42,6 +42,7 @@ class _DashHomeState extends State<DashHome> {
               children: [
                 // Destaque
                 DashboardMainItem(
+                  id: highlight['id'],
                   image: highlight['imagesUrl'],
                   name: highlight['title'],
                   rating: highlight['rating'].toString(),

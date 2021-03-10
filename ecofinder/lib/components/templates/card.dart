@@ -6,6 +6,7 @@ class CardInfo extends StatelessWidget {
   final String info;
   final String title;
   final double size;
+  final double height;
   final Color color;
   const CardInfo({
     Key key,
@@ -13,13 +14,14 @@ class CardInfo extends StatelessWidget {
     this.title,
     this.color,
     this.size,
+    this.height = 0.1,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * size,
-      height: MediaQuery.of(context).size.height * 0.1,
+      height: MediaQuery.of(context).size.height * height,
       padding: EdgeInsets.all(15.0),
       // color: color,
       decoration: BoxDecoration(

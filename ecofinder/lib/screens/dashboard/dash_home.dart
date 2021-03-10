@@ -31,7 +31,8 @@ class _DashHomeState extends State<DashHome> {
     return FutureBuilder(
       future: highlights,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.hasData) {
           final dashboardInfo = snapshot.data;
           final Map<String, dynamic> highlight = dashboardInfo['highlight'];
           final List<dynamic> top2 = dashboardInfo['top2'];

@@ -36,7 +36,6 @@ class _DashHomeState extends State<DashHome> {
           final Map<String, dynamic> highlight = dashboardInfo['highlight'];
           final List<dynamic> top2 = dashboardInfo['top2'];
           final List<dynamic> experience = dashboardInfo['experience'];
-
           return Scaffold(
             body: Column(
               children: [
@@ -54,11 +53,13 @@ class _DashHomeState extends State<DashHome> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       DashboardHomeItem(
+                        id: top2[0]['id'],
                         image: top2[0]['imagesUrl'],
                         name: top2[0]['title'],
                         rating: top2[0]['rating'].toString(),
                       ),
                       DashboardHomeItem(
+                        id: top2[1]['id'],
                         image: top2[1]['imagesUrl'],
                         name: top2[1]['title'],
                         rating: top2[1]['rating'].toString(),
@@ -85,11 +86,13 @@ class _DashHomeState extends State<DashHome> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       DashboardHomeItem(
+                        id: experience[0]['id'],
                         image: experience[0]['imagesUrl'],
                         name: experience[0]['title'],
                         rating: experience[0]['rating'].toString(),
                       ),
                       DashboardHomeItem(
+                        id: experience[1]['id'],
                         image: experience[1]['imagesUrl'],
                         name: experience[1]['title'],
                         rating: experience[1]['rating'].toString(),
@@ -105,11 +108,13 @@ class _DashHomeState extends State<DashHome> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       DashboardHomeItem(
+                        id: experience[0]['id'],
                         image: experience[0]['imagesUrl'],
                         name: experience[0]['title'],
                         rating: experience[0]['rating'].toString(),
                       ),
                       DashboardHomeItem(
+                        id: experience[1]['id'],
                         image: experience[1]['imagesUrl'],
                         name: experience[1]['title'],
                         rating: experience[1]['rating'].toString(),

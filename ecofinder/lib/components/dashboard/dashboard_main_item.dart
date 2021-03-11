@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:ecofinder/utils/constants.dart';
 import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,7 +8,7 @@ class DashboardMainItem extends StatelessWidget {
   final dynamic image;
   final int id;
   final String name;
-  final String rating;
+  final dynamic rating;
 
   const DashboardMainItem({
     @required this.image,
@@ -19,6 +20,9 @@ class DashboardMainItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final highlight = this.image['images'].length > 0
+        ? this.image['images'][0]['path']
+        : Constants.NO_IMAGE;
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, Routes.PLACEDETAIL, arguments: {'id': id});
@@ -26,59 +30,60 @@ class DashboardMainItem extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            alignment: Alignment.center,
-            child: Image.network(
-              this.image['images'].length > 0
-                  ? this.image['images'][0]['path']
-                  : Constants.NO_IMAGE,
-              height: MediaQuery.of(context).size.height * 0.5,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Positioned(
-            bottom: 10,
-            left: 15,
-            child: Text(
-              this.name,
-              style: TextStyle(
-                shadows: [
-                  Shadow(
-                    color: Colors.black87,
-                    offset: Offset(3, 2),
-                    blurRadius: 0,
-                  ),
-                ],
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
+            alignment: Alignment.bottomCenter,
+            height: MediaQuery.of(context).size.height * 0.5,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white12,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10.0),
+                bottomRight: Radius.circular(10.0),
+              ),
+              image: DecorationImage(
+                image: NetworkImage(highlight),
+                fit: BoxFit.cover,
               ),
             ),
-          ),
-          Positioned(
-            bottom: 10,
-            right: 15,
-            child: Row(
+            child: Stack(
               children: [
-                Icon(
-                  //Icons.star,
-                  CupertinoIcons.star_fill,
-                  color: Color(0xFFF6C209),
-                  size: 21,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 3, top: 2),
-                  child: Text(
-                    this.rating,
-                    style: TextStyle(
-                      fontSize: 20,
-                      shadows: [
-                        Shadow(
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.07,
+                  padding: EdgeInsets.only(left: 15, right: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.black12,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AutoSizeText(
+                        name,
+                        maxLines: 1,
+                        style: TextStyle(
                           color: Colors.black87,
-                          offset: Offset(3, 2),
-                          blurRadius: 0,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
                         ),
-                      ],
-                    ),
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            //Icons.star,
+                            CupertinoIcons.star_fill,
+                            color: Color(0xFFF6C209),
+                            size: 21,
+                          ),
+                          Text(
+                            (rating.toDouble()).toString(),
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ],

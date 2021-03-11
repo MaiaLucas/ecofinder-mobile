@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:ecofinder/utils/constants.dart';
 import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,81 +20,35 @@ class DashboardHomeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, Routes.PLACEDETAIL, arguments: {'id': id});
-      },
-      child: Row(
-        children: [
-          Container(
-            height: 60,
-            width: 70,
+    final preview = this.image?.isEmpty ?? true
+        ? Constants.NO_IMAGE
+        : this.image['images'][0]['path'];
+    return Stack(
+      // alignment: Alignment.topLeft,
+      children: [
+        InkWell(
+          onTap: () {
+            // Navigator.pushNamed(context, Routes.PLACEDETAIL, arguments: {'id': id});
+          },
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.5,
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black45,
-                  blurRadius: 4,
-                  offset: Offset(2, 1),
-                ),
-              ],
-            ),
-            alignment: Alignment.center,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                this.image?.isEmpty ?? true
-                    ? Constants.NO_IMAGE
-                    : this.image['images'][0]['path'],
-                height: MediaQuery.of(context).size.height * 0.5,
-                width: double.infinity,
+              color: Colors.white12,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10.0),
+                bottomRight: Radius.circular(10.0),
+              ),
+              image: DecorationImage(
+                image: NetworkImage(preview),
                 fit: BoxFit.cover,
+                scale: 0.5,
               ),
             ),
+            child: Text(name),
           ),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.27,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 5, bottom: 5),
-                    child: Text(
-                      this.name,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5, bottom: 3),
-                  child: Row(
-                    children: [
-                      Icon(
-                        CupertinoIcons.star_fill,
-                        color: Color(0xFFF6C209),
-                        size: 15,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 3, top: 2),
-                        child: Text(
-                          this.rating,
-                          style: TextStyle(
-                            fontSize: 15,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

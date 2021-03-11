@@ -1,5 +1,6 @@
 import 'package:ecofinder/models/Highlights.dart';
 import 'package:ecofinder/services/api.dart';
+import 'package:ecofinder/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -38,6 +39,7 @@ class _DashHomeState extends State<DashHome> {
           final List<dynamic> top2 = dashboardInfo['top2'];
           final List<dynamic> experience = dashboardInfo['experience'];
           return Scaffold(
+            backgroundColor: Constants.BACKGROUND,
             body: Column(
               children: [
                 // Destaque
@@ -45,85 +47,105 @@ class _DashHomeState extends State<DashHome> {
                   id: highlight['id'],
                   image: highlight['imagesUrl'],
                   name: highlight['title'],
-                  rating: highlight['rating'].toString(),
+                  rating: highlight['rating'], //.toString(),
                 ),
 
-                // Top 2
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      DashboardHomeItem(
-                        id: top2[0]['id'],
-                        image: top2[0]['imagesUrl'],
-                        name: top2[0]['title'],
-                        rating: top2[0]['rating'].toString(),
-                      ),
-                      DashboardHomeItem(
-                        id: top2[1]['id'],
-                        image: top2[1]['imagesUrl'],
-                        name: top2[1]['title'],
-                        rating: top2[1]['rating'].toString(),
-                      ),
-                    ],
-                  ),
-                ),
-
-                //Titulo
-                Padding(
-                  padding: const EdgeInsets.only(top: 40),
-                  child: Text(
-                    'Venha ter muitas experiências!',
-                    style: TextStyle(
-                      fontSize: 20,
+                Container(
+                  decoration: BoxDecoration(color: Colors.white38),
+                  margin: EdgeInsets.only(top: 10),
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    children: List.generate(
+                      top2.length,
+                      (index) {
+                        return DashboardHomeItem(
+                          id: top2[index]['id'],
+                          image: top2[index]['imagesUrl'],
+                          name: top2[index]['title'],
+                          rating: top2[index]['rating'].toString(),
+                        );
+                      },
                     ),
                   ),
                 ),
+                // Top 2
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 20),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //     children: [
+                //       DashboardHomeItem(
+                //         id: top2[0]['id'],
+                //         image: top2[0]['imagesUrl'],
+                //         name: top2[0]['title'],
+                //         rating: top2[0]['rating'].toString(),
+                //       ),
+                //       DashboardHomeItem(
+                //         id: top2[1]['id'],
+                //         image: top2[1]['imagesUrl'],
+                //         name: top2[1]['title'],
+                //         rating: top2[1]['rating'].toString(),
+                //       ),
+                //     ],
+                //   ),
+                // ),
 
-                // Destaques lista de experiencias
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      DashboardHomeItem(
-                        id: experience[0]['id'],
-                        image: experience[0]['imagesUrl'],
-                        name: experience[0]['title'],
-                        rating: experience[0]['rating'].toString(),
-                      ),
-                      DashboardHomeItem(
-                        id: experience[1]['id'],
-                        image: experience[1]['imagesUrl'],
-                        name: experience[1]['title'],
-                        rating: experience[1]['rating'].toString(),
-                      ),
-                    ],
-                  ),
-                ),
+                // //Titulo
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 40),
+                //   child: Text(
+                //     'Venha ter muitas experiências!',
+                //     style: TextStyle(
+                //       fontSize: 20,
+                //     ),
+                //   ),
+                // ),
 
-                // Destaques lista de experiencias
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      DashboardHomeItem(
-                        id: experience[0]['id'],
-                        image: experience[0]['imagesUrl'],
-                        name: experience[0]['title'],
-                        rating: experience[0]['rating'].toString(),
-                      ),
-                      DashboardHomeItem(
-                        id: experience[1]['id'],
-                        image: experience[1]['imagesUrl'],
-                        name: experience[1]['title'],
-                        rating: experience[1]['rating'].toString(),
-                      ),
-                    ],
-                  ),
-                ),
+                // // Destaques lista de experiencias
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 20),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //     children: [
+                //       DashboardHomeItem(
+                //         id: experience[0]['id'],
+                //         image: experience[0]['imagesUrl'],
+                //         name: experience[0]['title'],
+                //         rating: experience[0]['rating'].toString(),
+                //       ),
+                //       DashboardHomeItem(
+                //         id: experience[1]['id'],
+                //         image: experience[1]['imagesUrl'],
+                //         name: experience[1]['title'],
+                //         rating: experience[1]['rating'].toString(),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+
+                // // Destaques lista de experiencias
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 20),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //     children: [
+                //       DashboardHomeItem(
+                //         id: experience[0]['id'],
+                //         image: experience[0]['imagesUrl'],
+                //         name: experience[0]['title'],
+                //         rating: experience[0]['rating'].toString(),
+                //       ),
+                //       DashboardHomeItem(
+                //         id: experience[1]['id'],
+                //         image: experience[1]['imagesUrl'],
+                //         name: experience[1]['title'],
+                //         rating: experience[1]['rating'].toString(),
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           );
@@ -137,3 +159,5 @@ class _DashHomeState extends State<DashHome> {
     );
   }
 }
+
+// marco 142 linhas

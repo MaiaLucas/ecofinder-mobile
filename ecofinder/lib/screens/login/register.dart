@@ -4,6 +4,7 @@ import 'package:ecofinder/services/api.dart';
 import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ecofinder/utils/constants.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -41,7 +42,8 @@ class _RegisterState extends State<Register> {
           content: Text(data['message']),
           backgroundColor: Colors.red,
         );
-        _scaffoldKey.currentState.showSnackBar(snackBar);
+        //_scaffoldKey.currentState.showSnackBar(snackBar);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       } else {
         Navigator.pushNamed(context, Routes.DASHBOARD);
       }
@@ -53,21 +55,24 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       key: _scaffoldKey,
       body: SingleChildScrollView(
         physics: ClampingScrollPhysics(),
         child: Container(
-          color: Colors.black54,
-          height: MediaQuery.of(context).size.height,
+          color: Constants.BACKGROUND,
+          height: screenHeight,
           child: Padding(
             padding: const EdgeInsets.all(40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 100,
-                  width: 300,
+                  height: screenHeight * 0.13,
+                  width: screenWidth,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage("assets/ecofinderlogo.png"),
@@ -75,7 +80,8 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: screenHeight * 0.055),
+                //SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,7 +93,8 @@ class _RegisterState extends State<Register> {
                             labelText: 'Nome', border: OutlineInputBorder()),
                       ),
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: screenWidth * 0.025),
+                    //SizedBox(width: 10),
                     Flexible(
                       child: TextField(
                         controller: _lastNameController,
@@ -98,7 +105,8 @@ class _RegisterState extends State<Register> {
                     )
                   ],
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: screenHeight * 0.011),
+                //SizedBox(height: 10),
                 TextField(
                   controller: _emailController,
                   onChanged: (value) {
@@ -117,7 +125,8 @@ class _RegisterState extends State<Register> {
                         : null,
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: screenHeight * 0.011),
+                //SizedBox(height: 10),
                 TextField(
                   controller: _passwordController,
                   obscureText: notVisible,
@@ -133,7 +142,8 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: screenHeight * 0.011),
+                //SizedBox(height: 10),
                 TextField(
                   controller: _confirmPasswordController,
                   obscureText: notVisible,
@@ -149,26 +159,24 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
-                ButtonTheme(
-                  minWidth: 400,
-                  height: 50,
-                  child: RaisedButton(
-                    padding: const EdgeInsets.all(5),
-                    color: Colors.teal[500],
+                SizedBox(height: screenHeight * 0.018),
+                //SizedBox(height: 10),
+                Container(
+                  width: screenWidth * 0.4,
+                  height: screenHeight * 0.07,
+                  child: ElevatedButton(
+                    child: Text('Cadastrar', style: TextStyle(fontSize: 25)),
                     onPressed: () {
                       _submitForm(context);
                     },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      'Cadastrar',
-                      style: TextStyle(
-                        fontSize: 25,
-                      ),
-                    ),
                   ),
+                ),
+                SizedBox(height: screenHeight * 0.07),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.LOGIN);
+                  },
+                  child: Text('Já tem conta? Faça login!'),
                 ),
               ],
             ),

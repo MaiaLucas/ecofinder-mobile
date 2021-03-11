@@ -14,8 +14,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    //double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -26,39 +24,6 @@ class _HomeState extends State<Home> {
               image: DecorationImage(
                 image: AssetImage("assets/login.jpg"),
                 fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: screenHeight * 0.15,
-            child: Container(
-              decoration: BoxDecoration(
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.7),
-                    blurRadius: 30,
-                    offset: Offset(0, 0),
-                  ),
-                ],
-              ),
-              child: ButtonTheme(
-                minWidth: 120,
-                height: 85,
-                child: RaisedButton(
-                  padding: const EdgeInsets.all(5),
-                  color: Colors.teal[500],
-                  onPressed: () {
-                    Navigator.pushNamed(context, Routes.LOGIN);
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: const Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.white70,
-                    size: 45,
-                  ),
-                ),
               ),
             ),
           ),

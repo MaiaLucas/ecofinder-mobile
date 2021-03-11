@@ -5,7 +5,6 @@ import 'package:ecofinder/screens/place/detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './utils/routes.dart';
-import './screens/home.dart';
 
 void main() => runApp(MyApp());
 
@@ -39,7 +38,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        Routes.HOME: (ctx) => Dashboard(),
+        Routes.HOME: (ctx) => Login(),
         Routes.LOGIN: (ctx) => Login(),
         Routes.DASHBOARD: (ctx) => Dashboard(),
         Routes.REGISTER: (ctx) => Register(),

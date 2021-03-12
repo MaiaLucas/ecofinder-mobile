@@ -31,7 +31,7 @@ class DashboardMainItem extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.bottomCenter,
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.42,
             width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.white12,

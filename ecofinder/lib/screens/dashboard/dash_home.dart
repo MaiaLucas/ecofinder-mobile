@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecofinder/models/Highlights.dart';
 import 'package:ecofinder/services/api.dart';
 import 'package:ecofinder/utils/constants.dart';
@@ -13,7 +15,7 @@ class DashHome extends StatefulWidget {
 }
 
 class _DashHomeState extends State<DashHome> {
-  Future<dynamic> highlights;
+  Future<Highlights> highlights;
 
   @override
   void initState() {
@@ -27,6 +29,23 @@ class _DashHomeState extends State<DashHome> {
     super.dispose();
   }
 
+  /**
+   * Responsável por retornar uma lista de Widgets
+   * @params list lista com os elementos a serem exibidos
+   */
+  List<Widget> _getListWidget(List<dynamic> list) {
+    return list
+        .map(
+          (e) => DashboardHomeItem(
+            id: e['id'],
+            image: e['imagesUrl'],
+            name: e['title'],
+            rating: e['rating'].toString(),
+          ),
+        )
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -34,118 +53,66 @@ class _DashHomeState extends State<DashHome> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.hasData) {
-          final dashboardInfo = snapshot.data;
-          final Map<String, dynamic> highlight = dashboardInfo['highlight'];
-          final List<dynamic> top2 = dashboardInfo['top2'];
-          final List<dynamic> experience = dashboardInfo['experience'];
+          final info = snapshot.data;
+          final List<dynamic> listHighlights = info.listHighlights;
+          final List<dynamic> listExperiences = info.listExperiences;
+
           return Scaffold(
             backgroundColor: Constants.BACKGROUND,
-            body: Column(
+            body: Stack(
               children: [
-                // Destaque
-                DashboardMainItem(
-                  id: highlight['id'],
-                  image: highlight['imagesUrl'],
-                  name: highlight['title'],
-                  rating: highlight['rating'], //.toString(),
-                ),
-
-                Container(
-                  decoration: BoxDecoration(color: Colors.white38),
-                  margin: EdgeInsets.only(top: 10),
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    children: List.generate(
-                      top2.length,
-                      (index) {
-                        return DashboardHomeItem(
-                          id: top2[index]['id'],
-                          image: top2[index]['imagesUrl'],
-                          name: top2[index]['title'],
-                          rating: top2[index]['rating'].toString(),
-                        );
-                      },
+                Column(
+                  children: [
+                    // Destaque
+                    DashboardMainItem(
+                      id: info.highlight['id'],
+                      image: info.highlight['imagesUrl'],
+                      name: info.highlight['title'],
+                      rating: info.highlight['rating'], //.toString(),
                     ),
-                  ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
+                      child: Text(
+                        'Populares',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                        ),
+                      ),
+                    ),
+
+                    CarouselSlider(
+                      items: _getListWidget(listHighlights),
+                      options: CarouselOptions(
+                        autoPlay: false,
+                        enableInfiniteScroll: true,
+                        height: MediaQuery.of(context).size.height * 0.18,
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(top: 35.0, bottom: 10.0),
+                      child: AutoSizeText(
+                        'Aqui você encontra as melhores experiências',
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ),
+
+                    CarouselSlider(
+                      items: _getListWidget(listExperiences),
+                      options: CarouselOptions(
+                        autoPlay: false,
+                        enableInfiniteScroll: true,
+                        height: MediaQuery.of(context).size.height * 0.18,
+                      ),
+                    ),
+                  ],
                 ),
-                // Top 2
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 20),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //     children: [
-                //       DashboardHomeItem(
-                //         id: top2[0]['id'],
-                //         image: top2[0]['imagesUrl'],
-                //         name: top2[0]['title'],
-                //         rating: top2[0]['rating'].toString(),
-                //       ),
-                //       DashboardHomeItem(
-                //         id: top2[1]['id'],
-                //         image: top2[1]['imagesUrl'],
-                //         name: top2[1]['title'],
-                //         rating: top2[1]['rating'].toString(),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-
-                // //Titulo
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 40),
-                //   child: Text(
-                //     'Venha ter muitas experiências!',
-                //     style: TextStyle(
-                //       fontSize: 20,
-                //     ),
-                //   ),
-                // ),
-
-                // // Destaques lista de experiencias
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 20),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //     children: [
-                //       DashboardHomeItem(
-                //         id: experience[0]['id'],
-                //         image: experience[0]['imagesUrl'],
-                //         name: experience[0]['title'],
-                //         rating: experience[0]['rating'].toString(),
-                //       ),
-                //       DashboardHomeItem(
-                //         id: experience[1]['id'],
-                //         image: experience[1]['imagesUrl'],
-                //         name: experience[1]['title'],
-                //         rating: experience[1]['rating'].toString(),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-
-                // // Destaques lista de experiencias
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 20),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //     children: [
-                //       DashboardHomeItem(
-                //         id: experience[0]['id'],
-                //         image: experience[0]['imagesUrl'],
-                //         name: experience[0]['title'],
-                //         rating: experience[0]['rating'].toString(),
-                //       ),
-                //       DashboardHomeItem(
-                //         id: experience[1]['id'],
-                //         image: experience[1]['imagesUrl'],
-                //         name: experience[1]['title'],
-                //         rating: experience[1]['rating'].toString(),
-                //       ),
-                //     ],
-                //   ),
-                // ),
               ],
             ),
           );

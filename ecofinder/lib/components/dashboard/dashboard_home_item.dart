@@ -8,7 +8,7 @@ class DashboardHomeItem extends StatelessWidget {
   final int id;
   final dynamic image;
   final String name;
-  final String rating;
+  final dynamic rating;
 
   const DashboardHomeItem({
     Key key,
@@ -23,32 +23,74 @@ class DashboardHomeItem extends StatelessWidget {
     final preview = this.image?.isEmpty ?? true
         ? Constants.NO_IMAGE
         : this.image['images'][0]['path'];
-    return Stack(
-      // alignment: Alignment.topLeft,
-      children: [
-        InkWell(
-          onTap: () {
-            // Navigator.pushNamed(context, Routes.PLACEDETAIL, arguments: {'id': id});
-          },
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.5,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              color: Colors.white12,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10.0),
-                bottomRight: Radius.circular(10.0),
+    return ClipRRect(
+      child: Stack(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, Routes.PLACEDETAIL,
+                  arguments: {'id': id});
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.height * 0.3,
+              alignment: Alignment.bottomCenter,
+              margin: EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5.0),
+                ),
+                image: DecorationImage(
+                  image: NetworkImage(preview),
+                  fit: BoxFit.cover,
+                ),
               ),
-              image: DecorationImage(
-                image: NetworkImage(preview),
-                fit: BoxFit.cover,
-                scale: 0.5,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black54,
+                ),
+                height: MediaQuery.of(context).size.height * 0.05,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    AutoSizeText(
+                      name,
+                      overflow: TextOverflow.fade,
+                      maxLines: 2,
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 20,
+                      ),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          (double.parse(rating)).toString(),
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Icon(
+                          CupertinoIcons.star_fill,
+                          size: 20,
+                          color: Colors.amberAccent,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-            child: Text(name),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

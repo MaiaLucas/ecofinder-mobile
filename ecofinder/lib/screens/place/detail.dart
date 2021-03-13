@@ -77,9 +77,13 @@ class _PlaceDetailState extends State<PlaceDetail> {
               .toList();
           return Scaffold(
             backgroundColor: Constants.BACKGROUND,
+            appBar: AppBar(
+              title: Text(data.title),
+              backgroundColor: Constants.TOPBOTTOM,
+            ),
             body: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.only(top: 8.0),
+                padding: const EdgeInsets.only(top: 8),
                 child: Stack(
                   children: [
                     //INFORMAÇÕES
@@ -96,7 +100,7 @@ class _PlaceDetailState extends State<PlaceDetail> {
                           ),
                         ),
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.5,
+                          height: MediaQuery.of(context).size.height * 0.4,
                           width: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.only(left: 15, right: 15),
                           // color: Colors.amberAccent,
@@ -104,14 +108,6 @@ class _PlaceDetailState extends State<PlaceDetail> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                data.title,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
                               CardInfo(
                                 color: Color(0xFF34623f),
                                 info: data.description,
@@ -127,12 +123,12 @@ class _PlaceDetailState extends State<PlaceDetail> {
                                   CardInfo(
                                     color: Color(0xFF73a942),
                                     info: data.phone,
-                                    size: 0.4,
+                                    size: 0.35,
                                     title: 'Telefone',
                                   ),
                                   CardInfo(
                                     color: Color(0xFF3da35d),
-                                    size: 0.5,
+                                    size: 0.55,
                                     info:
                                         "${data.openOnWeekend ? 'Todos os dias' : 'De Seg a Sex'} \n das ${data.hrInit} às ${data.hrFinal}",
                                     title: 'Funcionamento',
@@ -145,18 +141,18 @@ class _PlaceDetailState extends State<PlaceDetail> {
                       ],
                     ),
                     // BOTÃO DE VOLTAR
-                    Positioned(
-                      top: 15.0,
-                      left: 10.0,
-                      child: IconButton(
-                        icon: Icon(Icons.arrow_back_ios_rounded),
-                        color: Color(0xFF38b000),
-                        iconSize: 30,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
+                    // Positioned(
+                    //   top: 15.0,
+                    //   left: 10.0,
+                    //   child: IconButton(
+                    //     icon: Icon(Icons.arrow_back_ios_rounded),
+                    //     color: Color(0xFF38b000),
+                    //     iconSize: 30,
+                    //     onPressed: () {
+                    //       Navigator.pop(context);
+                    //     },
+                    //   ),
+                    // ),
                     // BOTÃO PARA ABRIR O MAPA
                     Positioned(
                       bottom: 20.0,

@@ -29,10 +29,9 @@ class _DashHomeState extends State<DashHome> {
     super.dispose();
   }
 
-  /**
-   * Responsável por retornar uma lista de Widgets
-   * @params list lista com os elementos a serem exibidos
-   */
+  //Responsável por retornar uma lista de Widgets
+  //@params list lista com os elementos a serem exibidos
+
   List<Widget> _getListWidget(List<dynamic> list) {
     return list
         .map(
@@ -59,6 +58,12 @@ class _DashHomeState extends State<DashHome> {
 
           return Scaffold(
             backgroundColor: Constants.BACKGROUND,
+            // appBar: AppBar(
+            //   title: Text(
+            //     "Destaques",
+            //   ),
+            //   backgroundColor: Color(0xFF1e2f23),
+            // ),
             body: Stack(
               children: [
                 Column(
@@ -92,7 +97,7 @@ class _DashHomeState extends State<DashHome> {
                     ),
 
                     Padding(
-                      padding: const EdgeInsets.only(top: 35.0, bottom: 10.0),
+                      padding: const EdgeInsets.only(top: 24.0, bottom: 10.0),
                       child: AutoSizeText(
                         'Aqui você encontra as melhores experiências',
                         maxLines: 1,

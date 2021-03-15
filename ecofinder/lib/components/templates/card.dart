@@ -22,7 +22,7 @@ class CardInfo extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width * size,
       height: MediaQuery.of(context).size.height * height,
-      padding: EdgeInsets.all(15.0),
+      padding: EdgeInsets.all(12.0),
       // color: color,
       decoration: BoxDecoration(
         color: color,
@@ -51,6 +51,8 @@ class CardInfo extends StatelessWidget {
           SizedBox(height: 10),
           Text(
             info,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 4,
             textAlign: TextAlign.start,
             style: TextStyle(
               fontSize: 14,

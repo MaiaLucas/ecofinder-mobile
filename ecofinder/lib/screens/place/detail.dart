@@ -130,7 +130,7 @@ class _PlaceDetailState extends State<PlaceDetail> {
                                     color: Color(0xFF3da35d),
                                     size: 0.55,
                                     info:
-                                        "${data.openOnWeekend ? 'Todos os dias' : 'De Seg a Sex'} \n das ${data.hrInit} às ${data.hrFinal}",
+                                        "${data.openOnWeekend ? 'Todos os dias' : 'De Seg a Sex'} das ${data.hrInit} às ${data.hrFinal}",
                                     title: 'Funcionamento',
                                   ),
                                 ],

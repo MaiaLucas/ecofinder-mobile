@@ -60,7 +60,7 @@ class DashboardHomeItem extends StatelessWidget {
                       maxLines: 2,
                       style: TextStyle(
                         color: Colors.white70,
-                        fontSize: 20,
+                        fontSize: 17,
                       ),
                     ),
                     Row(

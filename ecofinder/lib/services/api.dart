@@ -59,4 +59,24 @@ class ApiService {
       throw Exception('Failed to load album');
     }
   }
+
+  //CARREGA AS INFORMAÇÕES DO DASHBOARD
+  static Future<dynamic> searchPlace({String city, String type}) async {
+    String searchCity = "";
+    String searchType = "";
+    if (city.isNotEmpty) {
+      searchCity = "city=${city}&";
+    }
+    if (type.isNotEmpty) {
+      searchType = "type=${type}";
+    }
+    final response = await http
+        .get("${URLS.BASE_URL}/search_place?${searchCity}${searchType}");
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+      // return Place.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load album');
+    }
+  }
 }

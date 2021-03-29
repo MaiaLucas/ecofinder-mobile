@@ -1,14 +1,18 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:ecofinder/utils/constants.dart';
+import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DashboardHomeItem extends StatelessWidget {
-  final String image;
+  final int id;
+  final dynamic image;
   final String name;
-  final String rating;
+  final dynamic rating;
 
   const DashboardHomeItem({
     Key key,
+    @required this.id,
     @required this.image,
     @required this.name,
     @required this.rating,
@@ -16,74 +20,77 @@ class DashboardHomeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          height: 60,
-          width: 70,
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black45,
-                blurRadius: 4,
-                offset: Offset(2, 1),
-              ),
-            ],
-          ),
-          alignment: Alignment.center,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.network(
-              this.image.length > 1 ? this.image : Constants.NO_IMAGE,
-              height: MediaQuery.of(context).size.height * 0.5,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width * 0.27,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 5, bottom: 5),
-                  child: Text(
-                    this.name,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
+    final preview = this.image?.isEmpty ?? true
+        ? Constants.NO_IMAGE
+        : this.image['images'][0]['path'];
+    return ClipRRect(
+      child: Stack(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, Routes.PLACEDETAIL,
+                  arguments: {'id': id});
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.height * 0.3,
+              alignment: Alignment.bottomCenter,
+              margin: EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5.0),
+                ),
+                image: DecorationImage(
+                  image: NetworkImage(preview),
+                  fit: BoxFit.cover,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 5, bottom: 3),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black54,
+                ),
+                height: MediaQuery.of(context).size.height * 0.05,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(
-                      CupertinoIcons.star_fill,
-                      color: Color(0xFFF6C209),
-                      size: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 3, top: 2),
-                      child: Text(
-                        this.rating,
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
+                    AutoSizeText(
+                      name,
+                      overflow: TextOverflow.fade,
+                      maxLines: 2,
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 17,
                       ),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          (double.parse(rating)).toString(),
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Icon(
+                          CupertinoIcons.star_fill,
+                          size: 20,
+                          color: Colors.amberAccent,
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-            ],
+            ),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }

@@ -1,10 +1,10 @@
 import 'package:ecofinder/screens/dashboard/dashboard.dart';
 import 'package:ecofinder/screens/login/login.dart';
 import 'package:ecofinder/screens/login/register.dart';
+import 'package:ecofinder/screens/place/detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './utils/routes.dart';
-import './screens/home.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,6 +24,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Ecofinder',
       theme: ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFF004b23),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+            ),
+          ),
+        ),
         primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         brightness: Brightness.dark,
@@ -34,6 +42,7 @@ class MyApp extends StatelessWidget {
         Routes.LOGIN: (ctx) => Login(),
         Routes.DASHBOARD: (ctx) => Dashboard(),
         Routes.REGISTER: (ctx) => Register(),
+        Routes.PLACEDETAIL: (ctx) => PlaceDetail(),
       },
     );
   }

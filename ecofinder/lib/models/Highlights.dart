@@ -1,17 +1,15 @@
 class Highlights {
-  final String id;
-  final String title;
-  final String imagesUrl;
-  final double rating;
+  final Map<String, dynamic> highlight;
+  final List<dynamic> listHighlights;
+  final List<dynamic> listExperiences;
 
-  Highlights({this.id, this.title, this.imagesUrl, this.rating});
+  Highlights({this.highlight, this.listHighlights, this.listExperiences});
 
   factory Highlights.fromJson(Map<dynamic, dynamic> json) {
     return Highlights(
-      id: json['id'],
-      title: json['title'],
-      imagesUrl: json['images_url'],
-      rating: json['rating'],
+      highlight: json['highlight'],
+      listHighlights: json['top2'],
+      listExperiences: json['experience'],
     );
   }
 }

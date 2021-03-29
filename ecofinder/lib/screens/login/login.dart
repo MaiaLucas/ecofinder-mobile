@@ -4,6 +4,7 @@ import 'package:ecofinder/services/api.dart';
 import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ecofinder/utils/constants.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -29,7 +30,8 @@ class _LoginState extends State<Login> {
           content: Text(data['message']),
           backgroundColor: Colors.red,
         );
-        _scaffoldKey.currentState.showSnackBar(snackBar);
+        //_scaffoldKey.currentState.showSnackBar(snackBar);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       } else {
         Navigator.pushNamed(context, Routes.DASHBOARD);
       }
@@ -47,7 +49,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       key: _scaffoldKey,
       body: Container(
-        color: Colors.black54,
+        color: Constants.BACKGROUND,
         child: Padding(
           padding: const EdgeInsets.all(40),
           child: Column(
@@ -110,24 +112,14 @@ class _LoginState extends State<Login> {
                       },
                       child: Text('Cadastre-se'),
                     ),
-                    ButtonTheme(
-                      minWidth: 100,
-                      height: 50,
-                      child: RaisedButton(
-                        padding: const EdgeInsets.all(5),
-                        color: Colors.teal[500],
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      height: MediaQuery.of(context).size.height * 0.055,
+                      child: ElevatedButton(
+                        child: Text('Entrar', style: TextStyle(fontSize: 25)),
                         onPressed: () {
                           _submitForm(context);
                         },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          'Entrar',
-                          style: TextStyle(
-                            fontSize: 25,
-                          ),
-                        ),
                       ),
                     ),
                   ],

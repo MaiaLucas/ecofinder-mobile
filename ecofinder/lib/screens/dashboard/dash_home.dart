@@ -1,5 +1,8 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecofinder/models/Highlights.dart';
 import 'package:ecofinder/services/api.dart';
+import 'package:ecofinder/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +15,7 @@ class DashHome extends StatefulWidget {
 }
 
 class _DashHomeState extends State<DashHome> {
-  Future<dynamic> highlights;
+  Future<Highlights> highlights;
 
   @override
   void initState() {
@@ -26,96 +29,94 @@ class _DashHomeState extends State<DashHome> {
     super.dispose();
   }
 
+  //Responsável por retornar uma lista de Widgets
+  //@params list lista com os elementos a serem exibidos
+
+  List<Widget> _getListWidget(List<dynamic> list) {
+    return list
+        .map(
+          (e) => DashboardHomeItem(
+            id: e['id'],
+            image: e['imagesUrl'],
+            name: e['title'],
+            rating: e['rating'].toString(),
+          ),
+        )
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: highlights,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          final dashboardInfo = snapshot.data;
-          final Map<String, dynamic> highlight = dashboardInfo['highlight'];
-          final List<dynamic> top2 = dashboardInfo['top2'];
-          final List<dynamic> experience = dashboardInfo['experience'];
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.hasData) {
+          final info = snapshot.data;
+          final List<dynamic> listHighlights = info.listHighlights;
+          final List<dynamic> listExperiences = info.listExperiences;
 
           return Scaffold(
-            body: Column(
+            backgroundColor: Constants.BACKGROUND,
+            // appBar: AppBar(
+            //   title: Text(
+            //     "Destaques",
+            //   ),
+            //   backgroundColor: Color(0xFF1e2f23),
+            // ),
+            body: Stack(
               children: [
-                // Destaque
-                DashboardMainItem(
-                  image: highlight['imagesUrl'],
-                  name: highlight['title'],
-                  rating: highlight['rating'].toString(),
-                ),
-
-                // Top 2
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      DashboardHomeItem(
-                        image: top2[0]['imagesUrl'],
-                        name: top2[0]['title'],
-                        rating: top2[0]['rating'].toString(),
-                      ),
-                      DashboardHomeItem(
-                        image: top2[1]['imagesUrl'],
-                        name: top2[1]['title'],
-                        rating: top2[1]['rating'].toString(),
-                      ),
-                    ],
-                  ),
-                ),
-
-                //Titulo
-                Padding(
-                  padding: const EdgeInsets.only(top: 40),
-                  child: Text(
-                    'Venha ter muitas experiências!',
-                    style: TextStyle(
-                      fontSize: 20,
+                Column(
+                  children: [
+                    // Destaque
+                    DashboardMainItem(
+                      id: info.highlight['id'],
+                      image: info.highlight['imagesUrl'],
+                      name: info.highlight['title'],
+                      rating: info.highlight['rating'], //.toString(),
                     ),
-                  ),
-                ),
 
-                // Destaques lista de experiencias
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      DashboardHomeItem(
-                        image: experience[0]['imagesUrl'],
-                        name: experience[0]['title'],
-                        rating: experience[0]['rating'].toString(),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
+                      child: Text(
+                        'Populares',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                        ),
                       ),
-                      DashboardHomeItem(
-                        image: experience[1]['imagesUrl'],
-                        name: experience[1]['title'],
-                        rating: experience[1]['rating'].toString(),
-                      ),
-                    ],
-                  ),
-                ),
+                    ),
 
-                // Destaques lista de experiencias
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      DashboardHomeItem(
-                        image: experience[0]['imagesUrl'],
-                        name: experience[0]['title'],
-                        rating: experience[0]['rating'].toString(),
+                    CarouselSlider(
+                      items: _getListWidget(listHighlights),
+                      options: CarouselOptions(
+                        autoPlay: false,
+                        enableInfiniteScroll: true,
+                        height: MediaQuery.of(context).size.height * 0.18,
                       ),
-                      DashboardHomeItem(
-                        image: experience[1]['imagesUrl'],
-                        name: experience[1]['title'],
-                        rating: experience[1]['rating'].toString(),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24.0, bottom: 10.0),
+                      child: AutoSizeText(
+                        'Aqui você encontra as melhores experiências',
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+
+                    CarouselSlider(
+                      items: _getListWidget(listExperiences),
+                      options: CarouselOptions(
+                        autoPlay: false,
+                        enableInfiniteScroll: true,
+                        height: MediaQuery.of(context).size.height * 0.18,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -130,3 +131,5 @@ class _DashHomeState extends State<DashHome> {
     );
   }
 }
+
+// marco 142 linhas

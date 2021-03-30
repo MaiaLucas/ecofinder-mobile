@@ -20,7 +20,6 @@ class _DashHomeState extends State<DashHome> {
   @override
   void initState() {
     super.initState();
-    print('init state');
     highlights = ApiService.loadDashboardInfo();
   }
 
@@ -58,12 +57,6 @@ class _DashHomeState extends State<DashHome> {
 
           return Scaffold(
             backgroundColor: Constants.BACKGROUND,
-            // appBar: AppBar(
-            //   title: Text(
-            //     "Destaques",
-            //   ),
-            //   backgroundColor: Color(0xFF1e2f23),
-            // ),
             body: Stack(
               children: [
                 Column(

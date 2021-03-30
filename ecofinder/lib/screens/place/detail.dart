@@ -3,6 +3,7 @@ import 'package:ecofinder/components/templates/card.dart';
 import 'package:ecofinder/models/Place.dart';
 import 'package:ecofinder/services/api.dart';
 import 'package:ecofinder/utils/constants.dart';
+import 'package:ecofinder/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
@@ -46,35 +47,6 @@ class _PlaceDetailState extends State<PlaceDetail> {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.hasData) {
           final Place data = snapshot.data;
-          final List<dynamic> imagesList =
-              data.imagesUrl['images']?.isEmpty ?? true
-                  ? [
-                      {"path": Constants.NO_IMAGE}
-                    ]
-                  : data.imagesUrl['images'];
-
-          final List<Widget> images = imagesList
-              .map(
-                (item) => Container(
-                  child: Container(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5.0),
-                      ),
-                      child: Stack(
-                        children: [
-                          Image.network(
-                            item['path'],
-                            fit: BoxFit.cover,
-                            width: 1000.0,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              )
-              .toList();
           return Scaffold(
             backgroundColor: Constants.BACKGROUND,
             appBar: AppBar(
@@ -90,7 +62,7 @@ class _PlaceDetailState extends State<PlaceDetail> {
                     Column(
                       children: [
                         CarouselSlider(
-                          items: images,
+                          items: Helpers.getImages(data.imagesUrl['images']),
                           options: CarouselOptions(
                             autoPlay: false,
                             enableInfiniteScroll: false,
@@ -140,19 +112,6 @@ class _PlaceDetailState extends State<PlaceDetail> {
                         ),
                       ],
                     ),
-                    // BOTÃO DE VOLTAR
-                    // Positioned(
-                    //   top: 15.0,
-                    //   left: 10.0,
-                    //   child: IconButton(
-                    //     icon: Icon(Icons.arrow_back_ios_rounded),
-                    //     color: Color(0xFF38b000),
-                    //     iconSize: 30,
-                    //     onPressed: () {
-                    //       Navigator.pop(context);
-                    //     },
-                    //   ),
-                    // ),
                     // BOTÃO PARA ABRIR O MAPA
                     Positioned(
                       bottom: 20.0,

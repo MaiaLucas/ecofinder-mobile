@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:ecofinder/services/api.dart';
 import 'package:ecofinder/utils/routes.dart';
+import 'package:ecofinder/utils/secure_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecofinder/utils/constants.dart';
@@ -20,12 +21,10 @@ class _LoginState extends State<Login> {
     final email = _emailController.text;
     final password = _passwordController.text;
 
-    ApiService.signIn({"email": email, "password": password}).then((res) {
+    ApiService.signIn({"email": email, "password": password}).then((res) async {
       var data = jsonDecode(res.body);
-
-      print(data);
-
-      if (res.statusCode != 200) {
+      print(res.body);
+      if (res.statusCode != 201) {
         final snackBar = SnackBar(
           content: Text(data['message']),
           backgroundColor: Colors.red,
@@ -33,6 +32,10 @@ class _LoginState extends State<Login> {
         //_scaffoldKey.currentState.showSnackBar(snackBar);
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       } else {
+        final token = res.body.token;
+        final user = res.body.user;
+        await SecureStorage.writeSecureStorage('token', token);
+        await SecureStorage.writeSecureStorage('user', user);
         Navigator.pushNamed(context, Routes.DASHBOARD);
       }
     }).catchError((err) {

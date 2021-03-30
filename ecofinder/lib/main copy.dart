@@ -1,4 +1,3 @@
-import 'package:ecofinder/app.dart';
 import 'package:ecofinder/screens/dashboard/dashboard.dart';
 import 'package:ecofinder/screens/home.dart';
 import 'package:ecofinder/screens/login/login.dart';
@@ -10,10 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './utils/routes.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(ReduxApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override

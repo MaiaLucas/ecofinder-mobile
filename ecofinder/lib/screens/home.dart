@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ecofinder/utils/routes.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,26 +10,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  //final _userController = TextEditingController();
-  //final _passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/login.jpg"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ],
-      ),
+    return StoreConnector(
+      builder: null,
+      converter: (store) => print(store),
     );
   }
 }

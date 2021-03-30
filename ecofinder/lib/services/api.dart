@@ -17,10 +17,9 @@ class ApiService {
   }
 
   // LOGIN
-
   static Future<dynamic> signIn(data) async {
     final response = await http.post(
-      "${URLS.BASE_URL}/signin",
+      "${URLS.BASE_URL}/login",
       body: jsonEncode(data),
       headers: {"Content-Type": "application/json"},
     );
@@ -29,7 +28,6 @@ class ApiService {
   }
 
   //CADASTRO
-
   static Future<dynamic> signUp(data) async {
     final response = await http.post(
       "${URLS.BASE_URL}/signup",

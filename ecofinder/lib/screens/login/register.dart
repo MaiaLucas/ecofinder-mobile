@@ -24,25 +24,20 @@ class _RegisterState extends State<Register> {
     final password = _passwordController.text;
     final confirmPassword = _confirmPasswordController.text;
     final firstName = _firstNameController.text;
-    final lastName = _lastNameController.text;
 
     ApiService.signUp({
       "email": email,
       "password": password,
-      "first_name": firstName,
-      "last_name": lastName,
-      "confirmPassword": confirmPassword
+      "full_name": firstName,
+      "confirm_password": confirmPassword
     }).then((res) {
       var data = jsonDecode(res.body);
 
-      print(data);
-
-      if (res.statusCode != 200) {
+      if (res.statusCode != 204) {
         final snackBar = SnackBar(
           content: Text(data['message']),
           backgroundColor: Colors.red,
         );
-        //_scaffoldKey.currentState.showSnackBar(snackBar);
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       } else {
         Navigator.pushNamed(context, Routes.DASHBOARD);
@@ -82,31 +77,14 @@ class _RegisterState extends State<Register> {
                 ),
                 SizedBox(height: screenHeight * 0.055),
                 //SizedBox(height: 50),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      child: TextField(
-                        controller: _firstNameController,
-                        decoration: InputDecoration(
-                            labelText: 'Nome', border: OutlineInputBorder()),
-                      ),
-                    ),
-                    SizedBox(width: screenWidth * 0.025),
-                    //SizedBox(width: 10),
-                    Flexible(
-                      child: TextField(
-                        controller: _lastNameController,
-                        decoration: InputDecoration(
-                            labelText: 'Sobrenome',
-                            border: OutlineInputBorder()),
-                      ),
-                    )
-                  ],
+                TextField(
+                  controller: _firstNameController,
+                  decoration: InputDecoration(
+                    labelText: 'Nome Completo',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 SizedBox(height: screenHeight * 0.011),
-                //SizedBox(height: 10),
                 TextField(
                   controller: _emailController,
                   onChanged: (value) {

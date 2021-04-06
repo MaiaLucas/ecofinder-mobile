@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:ecofinder/providers/auth.dart';
 import 'package:ecofinder/services/api.dart';
 import 'package:ecofinder/utils/routes.dart';
-import 'package:ecofinder/utils/secure_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecofinder/utils/constants.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -17,31 +18,24 @@ class _LoginState extends State<Login> {
   final _passwordController = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  _submitForm(BuildContext context) {
+  Future<void> _submitForm(BuildContext context) async {
     final email = _emailController.text;
     final password = _passwordController.text;
 
-    ApiService.signIn({"email": email, "password": password}).then((res) async {
-      var data = jsonDecode(res.body);
-      print(res.body);
-      if (res.statusCode != 201) {
-        final snackBar = SnackBar(
-          content: Text(data['message']),
-          backgroundColor: Colors.red,
-        );
-        //_scaffoldKey.currentState.showSnackBar(snackBar);
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      } else {
-        final token = res.body.token;
-        final user = res.body.user;
-        await SecureStorage.writeSecureStorage('token', token);
-        await SecureStorage.writeSecureStorage('user', user);
-        Navigator.pushNamed(context, Routes.DASHBOARD);
-      }
-    }).catchError((err) {
-      print('erro');
-      print(err);
-    });
+    Map<String, dynamic> data = {"email": email, "password": password};
+
+    AuthProvider auth = Provider.of(context, listen: false);
+
+    try {
+      await auth.login(data);
+      Navigator.pushNamed(context, Routes.DASHBOARD);
+    } catch (error) {
+      final snackBar = SnackBar(
+        content: Text(error['message']),
+        backgroundColor: Colors.red,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   bool notVisible = true;

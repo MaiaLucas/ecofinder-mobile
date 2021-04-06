@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:ecofinder/providers/auth.dart';
 import 'package:ecofinder/services/api.dart';
 import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecofinder/utils/constants.dart';
+import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -19,30 +21,30 @@ class _RegisterState extends State<Register> {
   final _confirmPasswordController = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  _submitForm(BuildContext context) {
+  Future<void> _submitForm(BuildContext context) async {
     final email = _emailController.text;
     final password = _passwordController.text;
     final confirmPassword = _confirmPasswordController.text;
     final firstName = _firstNameController.text;
 
-    ApiService.signUp({
+    Map<String, dynamic> data = {
       "email": email,
       "password": password,
       "full_name": firstName,
       "confirm_password": confirmPassword
-    }).then((res) {
-      var data = jsonDecode(res.body);
+    };
+    AuthProvider auth = Provider.of(context, listen: false);
 
-      if (res.statusCode != 204) {
-        final snackBar = SnackBar(
-          content: Text(data['message']),
-          backgroundColor: Colors.red,
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      } else {
-        Navigator.pushNamed(context, Routes.DASHBOARD);
-      }
-    });
+    try {
+      await auth.signup(data);
+      Navigator.pushNamed(context, Routes.DASHBOARD);
+    } catch (error) {
+      final snackBar = SnackBar(
+        content: Text(error['message']),
+        backgroundColor: Colors.red,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   bool notVisible = true;

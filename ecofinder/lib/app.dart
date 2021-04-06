@@ -1,15 +1,18 @@
-import 'package:ecofinder/localization.dart';
-import 'package:ecofinder/models/models.dart';
+import 'package:ecofinder/screens/dashboard/dashboard.dart';
+import 'package:ecofinder/screens/home.dart';
+import 'package:ecofinder/screens/login/login.dart';
+import 'package:ecofinder/screens/login/register.dart';
+import 'package:ecofinder/screens/place/detail.dart';
+import 'package:ecofinder/screens/product/detail.dart';
+import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
 
-class ReduxApp extends StatelessWidget {
-  final Store<AppState> store;
-
-  const ReduxApp({Key key, this.store}) : super(key: key);
+class App extends StatelessWidget {
+  const App({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,25 +25,32 @@ class ReduxApp extends StatelessWidget {
       systemNavigationBarColor: Colors.black,
       systemNavigationBarDividerColor: Colors.transparent,
     ));
-    return StoreProvider(
-      store: store,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        onGenerateTitle: (ctx) => ReduxLocalizations.of(ctx).appTitle,
-        theme: ThemeData(
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              primary: Color(0xFF004b23),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
-              ),
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Ecofinder',
+      theme: ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFF004b23),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
             ),
           ),
-          primarySwatch: Colors.green,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          brightness: Brightness.dark,
         ),
+        primarySwatch: Colors.green,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        brightness: Brightness.dark,
       ),
+      initialRoute: '/',
+      routes: {
+        Routes.HOME: (ctx) => Home(),
+        Routes.LOGIN: (ctx) => Login(),
+        Routes.DASHBOARD: (ctx) => Dashboard(),
+        Routes.REGISTER: (ctx) => Register(),
+        Routes.PLACEDETAIL: (ctx) => PlaceDetail(),
+        Routes.PRODUCTDETAIL: (ctx) => ProductDetail(),
+      },
     );
   }
 }

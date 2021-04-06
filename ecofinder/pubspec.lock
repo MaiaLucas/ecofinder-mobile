@@ -97,20 +97,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_redux:
-    dependency: "direct main"
-    description:
-      name: flutter_redux
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.8.2"
-  flutter_secure_storage:
-    dependency: "direct main"
-    description:
-      name: flutter_secure_storage
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.3.5"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -171,12 +157,19 @@ packages:
     source: hosted
     version: "0.12.10"
   meta:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: meta
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   path:
     dependency: transitive
     description:
@@ -233,10 +226,10 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.1"
-  redux:
+  provider:
     dependency: "direct main"
     description:
-      name: redux
+      name: provider
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.0"

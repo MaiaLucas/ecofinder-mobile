@@ -5,7 +5,9 @@ class Product {
   final String title;
   final String instagramAccount;
   final String facebookLink;
+  final String description;
   final double rating;
+  final double price;
   final Map<String, dynamic> imagesUrl;
 
   Product({
@@ -13,7 +15,9 @@ class Product {
     this.title,
     this.instagramAccount,
     this.facebookLink,
+    this.description,
     this.rating,
+    this.price,
     this.imagesUrl,
   });
 
@@ -21,10 +25,12 @@ class Product {
     return Product(
       id: json["id"],
       title: json["title"],
-      instagramAccount: json['instagram_account'],
-      facebookLink: json['facebook_link'],
+      description: json["description"],
+      instagramAccount: json['instagram'],
+      facebookLink: json['fbLink'],
       rating: json['rating'].toDouble(),
-      imagesUrl: jsonDecode(json['images_url']),
+      price: json['price'].toDouble(),
+      imagesUrl: jsonDecode(json['imagesUrl']),
     );
   }
 }

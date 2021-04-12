@@ -1,8 +1,13 @@
 import 'package:ecofinder/utils/constants.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class Helpers {
-  static List<Widget> getImages(dynamic list) {
+  static List<Widget> getImages({
+    dynamic list,
+    bool showBottomInfo = false,
+    Widget bottomInfo,
+  }) {
     print(list);
     final List<dynamic> imagesList = list?.isEmpty ?? true
         ? [
@@ -12,8 +17,8 @@ class Helpers {
 
     return imagesList
         .map(
-          (item) => Container(
-            child: Container(
+          (item) => Stack(children: [
+            Container(
               child: ClipRRect(
                 borderRadius: BorderRadius.all(
                   Radius.circular(5.0),
@@ -29,7 +34,8 @@ class Helpers {
                 ),
               ),
             ),
-          ),
+            showBottomInfo ? bottomInfo : null,
+          ]),
         )
         .toList();
   }

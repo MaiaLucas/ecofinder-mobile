@@ -30,12 +30,16 @@ class _SearchState extends State<Search> {
   Widget getImage(dynamic image) {
     dynamic url = "";
     if (image['images_url'].runtimeType == String) {
-      if (!jsonDecode(image['images_url'])?.isEmpty) {
-        url = jsonDecode(image['images_url'])['images'][0]['path'];
+      if (!jsonDecode(image['images_url'])?.isEmpty ?? true) {
+        url = jsonDecode(image['images_url'])['images'].length > 0
+            ? jsonDecode(image['images_url'])['images'][0]['path']
+            : "";
       }
     } else {
-      if (!(image['images_url'])?.isEmpty) {
-        url = (image['images_url'])['images'][0]['path'];
+      if (!(image['images_url'])?.isEmpty ?? true) {
+        url = image['images_url']['images'].length
+            ? image['images_url']['images'][0]['path']
+            : "";
       }
     }
 

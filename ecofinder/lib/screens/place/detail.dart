@@ -62,7 +62,8 @@ class _PlaceDetailState extends State<PlaceDetail> {
                     Column(
                       children: [
                         CarouselSlider(
-                          items: Helpers.getImages(data.imagesUrl['images']),
+                          items:
+                              Helpers.getImages(list: data.imagesUrl['images']),
                           options: CarouselOptions(
                             autoPlay: false,
                             enableInfiniteScroll: false,

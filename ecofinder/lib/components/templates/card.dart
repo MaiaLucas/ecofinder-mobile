@@ -8,12 +8,14 @@ class CardInfo extends StatelessWidget {
   final double size;
   final double height;
   final Color color;
+  final Icon icon;
   const CardInfo({
     Key key,
     this.info,
     this.title,
     this.color,
     this.size,
+    this.icon,
     this.height = 0.1,
   }) : super(key: key);
 
@@ -37,26 +39,37 @@ class CardInfo extends StatelessWidget {
           Radius.circular(10.0),
         ),
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AutoSizeText(
-            title,
-            maxLines: 1,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 10),
-          Text(
-            info,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 4,
-            textAlign: TextAlign.start,
-            style: TextStyle(
-              fontSize: 14,
-            ),
+          icon != null
+              ? SizedBox(
+                  child: icon,
+                  width: 45,
+                )
+              : SizedBox(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AutoSizeText(
+                title,
+                maxLines: 1,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                info,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 4,
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+            ],
           ),
         ],
       ),

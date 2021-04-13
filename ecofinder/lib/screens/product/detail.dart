@@ -44,7 +44,6 @@ class _ProductDetailState extends State<ProductDetail> {
         }
 
         final Product product = snapshot.data;
-        print(product);
 
         final Widget bottomImageInfo = Positioned(
           bottom: 0,

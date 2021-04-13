@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:ecofinder/models/User.dart';
 import 'package:ecofinder/services/urls.dart';
 import 'package:ecofinder/utils/store.dart';
 import 'package:http/http.dart' as http;
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 
 class AuthProvider with ChangeNotifier {
   String _userId;
+  User _user;
   String _token;
   DateTime _expDate;
   Timer _logoutTimer;
@@ -19,6 +21,10 @@ class AuthProvider with ChangeNotifier {
 
   String get userId {
     return isAuth ? _userId : null;
+  }
+
+  User get user {
+    return isAuth ? _user : null;
   }
 
   String get token {
@@ -91,6 +97,8 @@ class AuthProvider with ChangeNotifier {
     _token = userData['token'];
     _expDate = expDate;
 
+    //armazena as informações do usuário
+    getUser(_userId);
     // logout automatico
     _autoLogout();
     notifyListeners();
@@ -120,5 +128,17 @@ class AuthProvider with ChangeNotifier {
     final timeToLogout = _expDate.difference(DateTime.now()).inSeconds;
 
     _logoutTimer = Timer(Duration(seconds: timeToLogout), logout);
+  }
+
+  Future<void> getUser(String id) async {
+    final response = await http.get(
+      "${URLS.BASE_URL}/user/$id",
+    );
+
+    final responseBody = jsonDecode(response.body);
+    if (responseBody['error'] != null) {
+      throw responseBody['message'];
+    }
+    _user = User.fromJson(responseBody);
   }
 }

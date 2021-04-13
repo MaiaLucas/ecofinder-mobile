@@ -1,4 +1,5 @@
 import 'package:ecofinder/screens/profile/index.dart';
+import 'package:ecofinder/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,11 +12,8 @@ class _DashMenuState extends State<DashMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Perfil'),
-        centerTitle: true,
-      ),
-      body: Profile(),
+      backgroundColor: Constants.BACKGROUND,
+      body: SafeArea(child: Profile()),
     );
   }
 }

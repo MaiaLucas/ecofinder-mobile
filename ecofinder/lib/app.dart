@@ -4,6 +4,7 @@ import 'package:ecofinder/screens/login/login.dart';
 import 'package:ecofinder/screens/login/register.dart';
 import 'package:ecofinder/screens/place/detail.dart';
 import 'package:ecofinder/screens/product/detail.dart';
+import 'package:ecofinder/screens/profile/detail.dart';
 import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,6 +51,7 @@ class App extends StatelessWidget {
         Routes.REGISTER: (ctx) => Register(),
         Routes.PLACEDETAIL: (ctx) => PlaceDetail(),
         Routes.PRODUCTDETAIL: (ctx) => ProductDetail(),
+        Routes.PROFILEDETAIL: (ctx) => ProfileDetail(),
       },
     );
   }

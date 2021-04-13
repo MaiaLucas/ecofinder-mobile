@@ -5,5 +5,6 @@ class Routes {
   static const DASHBOARD = '/dashboard';
   static const PLACEDETAIL = '/place_detail';
   static const PRODUCTDETAIL = '/product_detail';
+  static const PROFILEDETAIL = '/profile_detail';
   static const TESTE = '/';
 }

@@ -49,6 +49,7 @@ class Profile extends StatelessWidget {
         'icon': Icon(MdiIcons.fromString('location-exit'), size: 30),
         'action': () {
           Provider.of<AuthProvider>(context, listen: false).logout();
+          Navigator.pushNamed(context, Routes.HOME);
         },
       },
     ];

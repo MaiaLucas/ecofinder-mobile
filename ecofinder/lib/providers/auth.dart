@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:ecofinder/models/User.dart';
 import 'package:ecofinder/services/urls.dart';
+import 'package:ecofinder/utils/routes.dart';
 import 'package:ecofinder/utils/store.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -40,8 +41,8 @@ class AuthProvider with ChangeNotifier {
   /**
    * Responsável pela autenticação do usuário
    */
-  Future<void> _authenticate(
-      Map<String, dynamic> data, String urlSegment) async {
+  Future<void> _authenticate(Map<String, dynamic> data, String urlSegment,
+      BuildContext context) async {
     final response = await http.post(
       "${URLS.BASE_URL}/$urlSegment",
       body: jsonEncode(data),
@@ -49,6 +50,7 @@ class AuthProvider with ChangeNotifier {
     );
 
     final responseBody = jsonDecode(response.body);
+
     if (responseBody['error'] != null) {
       throw responseBody['message'];
     }
@@ -67,19 +69,22 @@ class AuthProvider with ChangeNotifier {
       "expDate": _expDate.toIso8601String(),
     });
 
+    //armazena as informações do usuário
+    await getUser(responseBody['user']);
+
     // logout automatico
     _autoLogout();
     notifyListeners();
-
+    Navigator.pushNamed(context, Routes.DASHBOARD);
     return Future.value();
   }
 
-  Future<void> signup(Map<String, dynamic> data) async {
-    return await _authenticate(data, 'signup');
+  Future<void> signup(Map<String, dynamic> data, BuildContext context) async {
+    return await _authenticate(data, 'signup', context);
   }
 
-  Future<void> login(Map<String, dynamic> data) async {
-    return await _authenticate(data, 'login');
+  Future<void> login(Map<String, dynamic> data, BuildContext context) async {
+    return await _authenticate(data, 'login', context);
   }
 
   Future<void> autoLogin() async {

@@ -36,8 +36,7 @@ class _RegisterState extends State<Register> {
     AuthProvider auth = Provider.of(context, listen: false);
 
     try {
-      await auth.signup(data);
-      Navigator.pushNamed(context, Routes.DASHBOARD);
+      return await auth.signup(data, context);
     } catch (error) {
       final snackBar = SnackBar(
         content: Text(error['message']),

@@ -27,8 +27,8 @@ class _LoginState extends State<Login> {
     AuthProvider auth = Provider.of(context, listen: false);
 
     try {
-      await auth.login(data);
-      Navigator.pushNamed(context, Routes.DASHBOARD);
+      await auth.login(data, context);
+      // Navigator.pushNamed(context, Routes.DASHBOARD);
     } catch (error) {
       final snackBar = SnackBar(
         content: Text(error['message']),

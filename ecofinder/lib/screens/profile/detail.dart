@@ -26,7 +26,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
       print('submit');
     }
 
-    final deviceSize = MediaQuery.of(context).size;
+    //final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Constants.BACKGROUND,
       appBar: AppBar(

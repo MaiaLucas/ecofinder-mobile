@@ -38,9 +38,8 @@ class AuthProvider with ChangeNotifier {
     return null;
   }
 
-  /**
-   * Responsável pela autenticação do usuário
-   */
+  //Responsável pela autenticação do usuário
+
   Future<void> _authenticate(Map<String, dynamic> data, String urlSegment,
       BuildContext context) async {
     final response = await http.post(

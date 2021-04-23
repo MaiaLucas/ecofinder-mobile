@@ -1,7 +1,7 @@
-import 'dart:convert';
+//import 'dart:convert';
 
 import 'package:ecofinder/providers/auth.dart';
-import 'package:ecofinder/services/api.dart';
+//import 'package:ecofinder/services/api.dart';
 import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final _emailController = TextEditingController();
   final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
+  //final _lastNameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();

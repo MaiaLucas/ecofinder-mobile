@@ -17,25 +17,27 @@ class Helpers {
 
     return imagesList
         .map(
-          (item) => Stack(children: [
-            Container(
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(5.0),
-                ),
-                child: Stack(
-                  children: [
-                    Image.network(
-                      item['path'],
-                      fit: BoxFit.cover,
-                      width: 1000.0,
-                    ),
-                  ],
+          (item) => Stack(
+            children: [
+              Container(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5.0),
+                  ),
+                  child: Stack(
+                    children: [
+                      Image.network(
+                        item['path'],
+                        fit: BoxFit.cover,
+                        width: 1000.0,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            showBottomInfo ? bottomInfo : null,
-          ]),
+              showBottomInfo ? bottomInfo : null,
+            ],
+          ),
         )
         .toList();
   }

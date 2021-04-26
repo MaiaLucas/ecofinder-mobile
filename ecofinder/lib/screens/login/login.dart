@@ -122,6 +122,13 @@ class _LoginState extends State<Login> {
                   ],
                 ),
               ),
+              SizedBox(height: 50),
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.LOGINRECOVER);
+                },
+                child: Text('Esqueceu sua senha?'),
+              ),
             ],
           ),
         ),

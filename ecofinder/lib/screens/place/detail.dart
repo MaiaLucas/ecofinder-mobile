@@ -47,6 +47,7 @@ class _PlaceDetailState extends State<PlaceDetail> {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.hasData) {
           final Place data = snapshot.data;
+          print(data.imagesUrl);
           return Scaffold(
             backgroundColor: Constants.BACKGROUND,
             appBar: AppBar(
@@ -61,6 +62,7 @@ class _PlaceDetailState extends State<PlaceDetail> {
                     //INFORMAÇÕES
                     Column(
                       children: [
+                        //PROBLEMA AQUI
                         CarouselSlider(
                           items:
                               Helpers.getImages(list: data.imagesUrl['images']),

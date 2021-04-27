@@ -18,46 +18,50 @@ class _LoginRecoverState extends State<LoginRecover> {
         title: Text("Recuperação de senha"),
         backgroundColor: Constants.TOPBOTTOM,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: screenHeight,
-          width: screenWidth,
-          child: Padding(
-            padding: const EdgeInsets.all(40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                    "Caso tenha esquecido sua senha basta nos informar o e-mail vinculado a sua conta que iremos enviar uma soliticação de troca de senha!",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 20, color: Colors.white54)),
-                SizedBox(height: screenHeight * 0.2),
-                Text(
-                  "Insira aqui o e-mail:",
-                  style: TextStyle(
-                    fontSize: 20,
+      body: Container(
+        height: screenHeight,
+        width: screenWidth,
+        child: Padding(
+          padding: const EdgeInsets.all(40),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 240,
+                width: 200,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/tree.png'),
+                    fit: BoxFit.fill,
                   ),
                 ),
-                SizedBox(height: 20),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                  ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                "Informe o e-mail ligado à sua conta, um link de redefinição de senha será enviado.",
+                textAlign: TextAlign.left,
+                style: TextStyle(fontSize: 15, color: Colors.white54),
+              ),
+              SizedBox(height: 20),
+              TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "E-mail",
                 ),
-                SizedBox(height: 20),
-                Container(
-                  width: screenWidth * 0.5,
-                  height: screenHeight * 0.05,
-                  child: ElevatedButton(
-                    child: Text(
-                      'Enviar!',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    onPressed: () {},
+              ),
+              SizedBox(height: 20),
+              Container(
+                width: screenWidth * 0.5,
+                height: screenHeight * 0.05,
+                child: ElevatedButton(
+                  child: Text(
+                    'Recuperar senha',
+                    style: TextStyle(fontSize: 18),
                   ),
+                  onPressed: () {},
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

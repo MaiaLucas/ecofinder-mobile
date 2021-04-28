@@ -80,11 +80,11 @@ class _PlaceStep3State extends State<PlaceStep3> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 70,
-                width: 70,
+                height: 150,
+                width: 150,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/map.jpg'),
+                    image: AssetImage('assets/map3.png'),
                     fit: BoxFit.fill,
                   ),
                 ),

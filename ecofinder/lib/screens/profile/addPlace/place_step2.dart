@@ -28,11 +28,11 @@ class _PlaceStep2State extends State<PlaceStep2> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 70,
-                width: 70,
+                height: 150,
+                width: 150,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/map.jpg'),
+                    image: AssetImage('assets/map2.png'),
                     fit: BoxFit.fill,
                   ),
                 ),

@@ -1,7 +1,6 @@
-import 'dart:io';
+import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:ecofinder/utils/constants.dart';
-import 'package:image_picker/image_picker.dart';
 
 class PlaceStep2 extends StatefulWidget {
   @override
@@ -13,61 +12,11 @@ class _PlaceStep2State extends State<PlaceStep2> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    File _image;
-    bool isOpen = false;
-
-    _imgFromCamera() async {
-      File image = await ImagePicker.pickImage(
-          source: ImageSource.camera, imageQuality: 50);
-
-      setState(() {
-        _image = image;
-      });
-    }
-
-    _imgFromGallery() async {
-      File image = await ImagePicker.pickImage(
-          source: ImageSource.gallery, imageQuality: 50);
-
-      setState(() {
-        _image = image;
-      });
-    }
-
-    void _showPicker(context) {
-      showModalBottomSheet(
-          context: context,
-          builder: (BuildContext bc) {
-            return SafeArea(
-              child: Container(
-                child: Wrap(
-                  children: <Widget>[
-                    ListTile(
-                        leading: Icon(Icons.photo_library),
-                        title: Text('Photo Library'),
-                        onTap: () {
-                          _imgFromGallery();
-                          Navigator.of(context).pop();
-                        }),
-                    ListTile(
-                      leading: Icon(Icons.photo_camera),
-                      title: Text('Camera'),
-                      onTap: () {
-                        _imgFromCamera();
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            );
-          });
-    }
 
     return Scaffold(
       backgroundColor: Constants.BACKGROUND,
       appBar: AppBar(
-        title: Text("Cadastrar novo local 2/2"),
+        title: Text("Cadastrar novo local"),
         backgroundColor: Constants.TOPBOTTOM,
       ),
       body: Container(
@@ -79,35 +28,16 @@ class _PlaceStep2State extends State<PlaceStep2> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                child: GestureDetector(
-                  onTap: () {
-                    _showPicker(context);
-                  },
-                  child: Container(
-                    child: _image != null
-                        ? Container(
-                            child: ClipRRect(
-                              child: Image.file(
-                                _image,
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.fitHeight,
-                              ),
-                            ),
-                          )
-                        : Container(
-                            decoration: BoxDecoration(color: Colors.white24),
-                            width: screenWidth,
-                            height: screenHeight * 0.2,
-                            child: Center(
-                              child:
-                                  Text("Clique aqui para inserir uma imagem!"),
-                            ),
-                          ),
+                height: 70,
+                width: 70,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/map.jpg'),
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
-              SizedBox(height: 15),
+              SizedBox(height: screenHeight * 0.015),
               DropdownButton<String>(
                 dropdownColor: Constants.TOPBOTTOM,
                 isExpanded: true,
@@ -121,40 +51,29 @@ class _PlaceStep2State extends State<PlaceStep2> {
                 }).toList(),
                 onChanged: (_) {},
               ),
-              SizedBox(height: 15),
+              SizedBox(height: screenHeight * 0.015),
               TextField(
                 decoration: InputDecoration(
-                  labelText: 'Abre às:',
+                  labelText: 'Cidade',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 15),
+              SizedBox(height: screenHeight * 0.015),
               TextField(
                 decoration: InputDecoration(
-                  labelText: 'Fecha às:',
+                  labelText: 'Endereço completo',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 15),
-              CheckboxListTile(
-                title: Text(
-                    "Marque apenas caso o local funcione nos fins de semana!"),
-                value: isOpen,
-                onChanged: (newValue) {
-                  setState(() {
-                    isOpen = newValue;
-                  });
-                },
-                controlAffinity:
-                    ListTileControlAffinity.trailing, //  <-- leading Checkbox
-              ),
-              SizedBox(height: 40),
+              SizedBox(height: screenHeight * 0.06),
               Container(
-                width: screenWidth * 0.5,
+                width: screenWidth * 0.3,
                 height: screenHeight * 0.05,
                 child: ElevatedButton(
-                  child: Text('Enviar!', style: TextStyle(fontSize: 20)),
-                  onPressed: () {},
+                  child: Text('Avançar', style: TextStyle(fontSize: 20)),
+                  onPressed: () {
+                    Navigator.pushNamed(context, Routes.PLACESTEP3);
+                  },
                 ),
               ),
             ],

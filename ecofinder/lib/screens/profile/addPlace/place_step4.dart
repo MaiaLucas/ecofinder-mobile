@@ -2,12 +2,12 @@ import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:ecofinder/utils/constants.dart';
 
-class PlaceStep1 extends StatefulWidget {
+class PlaceStep4 extends StatefulWidget {
   @override
-  _PlaceStep1State createState() => _PlaceStep1State();
+  _PlaceStep4State createState() => _PlaceStep4State();
 }
 
-class _PlaceStep1State extends State<PlaceStep1> {
+class _PlaceStep4State extends State<PlaceStep4> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -28,47 +28,31 @@ class _PlaceStep1State extends State<PlaceStep1> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 70,
-                width: 70,
+                height: 170,
+                width: 170,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/map.jpg'),
+                    image: AssetImage('assets/tree.png'),
                     fit: BoxFit.fill,
                   ),
                 ),
               ),
               SizedBox(height: screenHeight * 0.015),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Nome',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: screenHeight * 0.015),
-              Container(
-                child: TextField(
-                  maxLines: 5,
-                  decoration: InputDecoration(
-                    hintText: "Descrição",
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ),
-              SizedBox(height: screenHeight * 0.015),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Número para contato',
-                  border: OutlineInputBorder(),
+              Text(
+                "Solicitação de cadastro enviada com sucesso.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 25,
                 ),
               ),
               SizedBox(height: screenHeight * 0.06),
               Container(
-                width: screenWidth * 0.3,
-                height: screenHeight * 0.05,
+                width: screenWidth * 0.17,
+                height: screenHeight * 0.06,
                 child: ElevatedButton(
-                  child: Text('Avançar', style: TextStyle(fontSize: 20)),
+                  child: Text('OK', style: TextStyle(fontSize: 25)),
                   onPressed: () {
-                    Navigator.pushNamed(context, Routes.PLACESTEP2);
+                    Navigator.pushNamed(context, Routes.PROFILEDETAIL);
                   },
                 ),
               ),

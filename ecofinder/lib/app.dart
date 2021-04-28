@@ -13,6 +13,8 @@ import 'package:flutter/widgets.dart';
 
 import 'screens/profile/addPlace/place_step1.dart';
 import 'screens/profile/addPlace/place_step2.dart';
+import 'screens/profile/addPlace/place_step3.dart';
+import 'screens/profile/addPlace/place_step4.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -49,7 +51,7 @@ class App extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        Routes.HOME: (ctx) => Home(),
+        Routes.HOME: (ctx) => PlaceStep1(),
         Routes.LOGIN: (ctx) => Login(),
         Routes.DASHBOARD: (ctx) => Dashboard(),
         Routes.REGISTER: (ctx) => Register(),
@@ -58,6 +60,8 @@ class App extends StatelessWidget {
         Routes.PROFILEDETAIL: (ctx) => ProfileDetail(),
         Routes.PLACESTEP1: (ctx) => PlaceStep1(),
         Routes.PLACESTEP2: (ctx) => PlaceStep2(),
+        Routes.PLACESTEP3: (ctx) => PlaceStep3(),
+        Routes.PLACESTEP4: (ctx) => PlaceStep4(),
         Routes.LOGINRECOVER: (ctx) => LoginRecover(),
       },
     );

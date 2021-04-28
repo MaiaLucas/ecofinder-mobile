@@ -8,6 +8,8 @@ class Routes {
   static const PROFILEDETAIL = '/profile_detail';
   static const PLACESTEP1 = '/place_step1';
   static const PLACESTEP2 = '/place_step2';
+  static const PLACESTEP3 = '/place_step3';
+  static const PLACESTEP4 = '/place_step4';
   static const LOGINRECOVER = '/login_redover';
   static const TESTE = '/';
 }

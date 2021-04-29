@@ -41,7 +41,7 @@ class _SearchState extends State<Search> {
       //anterior, com warning
       //if (!(image['images_url'])?.isEmpty ?? true) {
       if (!(image['images_url']).isEmpty ?? true) {
-        url = image['images_url']['images'].length
+        url = image['images_url']['images'].length > 0
             ? image['images_url']['images'][0]['path']
             : "";
       }

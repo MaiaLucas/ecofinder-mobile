@@ -8,7 +8,6 @@ class Helpers {
     bool showBottomInfo = false,
     Widget bottomInfo,
   }) {
-    print(list);
     final List<dynamic> imagesList = list?.isEmpty ?? true
         ? [
             {"path": Constants.NO_IMAGE}
@@ -35,7 +34,7 @@ class Helpers {
                   ),
                 ),
               ),
-              showBottomInfo ? bottomInfo : null,
+              showBottomInfo ? bottomInfo : Text(''),
             ],
           ),
         )

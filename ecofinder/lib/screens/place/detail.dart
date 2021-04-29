@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecofinder/components/templates/card.dart';
 import 'package:ecofinder/models/Place.dart';
@@ -41,13 +43,14 @@ class _PlaceDetailState extends State<PlaceDetail> {
   Widget build(BuildContext context) {
     final Map<dynamic, dynamic> arguments =
         ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
+
     return FutureBuilder(
       future: ApiService.placeDetail(arguments['id']),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.hasData) {
           final Place data = snapshot.data;
-          print(data.imagesUrl);
+
           return Scaffold(
             backgroundColor: Constants.BACKGROUND,
             appBar: AppBar(
@@ -62,10 +65,14 @@ class _PlaceDetailState extends State<PlaceDetail> {
                     //INFORMAÇÕES
                     Column(
                       children: [
-                        //PROBLEMA AQUI
                         CarouselSlider(
-                          items:
-                              Helpers.getImages(list: data.imagesUrl['images']),
+                          items: Helpers.getImages(
+                            list: data.imagesUrl['images'],
+                            showBottomInfo: false,
+                            bottomInfo: Center(
+                              child: Text('No Image'),
+                            ),
+                          ),
                           options: CarouselOptions(
                             autoPlay: false,
                             enableInfiniteScroll: false,

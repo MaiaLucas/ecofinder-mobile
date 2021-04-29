@@ -32,7 +32,7 @@ class _PlaceStep4State extends State<PlaceStep4> {
                 width: 170,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/tree.png'),
+                    image: AssetImage('assets/like.png'),
                     fit: BoxFit.fill,
                   ),
                 ),

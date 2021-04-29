@@ -19,60 +19,63 @@ class _PlaceStep1State extends State<PlaceStep1> {
         title: Text("Cadastrar novo local"),
         backgroundColor: Constants.TOPBOTTOM,
       ),
-      body: Container(
-        height: screenHeight,
-        width: screenWidth,
-        child: Padding(
-          padding: const EdgeInsets.all(40),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: 150,
-                width: 150,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/map1.png'),
-                    fit: BoxFit.fill,
+      body: SingleChildScrollView(
+        child: Container(
+          height: screenHeight,
+          width: screenWidth,
+          child: Padding(
+            padding: const EdgeInsets.all(40),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 150,
+                  width: 150,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/map1.png'),
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: screenHeight * 0.015),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Nome',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: screenHeight * 0.015),
-              Container(
-                child: TextField(
-                  maxLines: 5,
+                SizedBox(height: screenHeight * 0.015),
+                TextField(
                   decoration: InputDecoration(
-                    hintText: "Descrição",
+                    labelText: 'Nome',
                     border: OutlineInputBorder(),
                   ),
                 ),
-              ),
-              SizedBox(height: screenHeight * 0.015),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Número para contato',
-                  border: OutlineInputBorder(),
+                SizedBox(height: screenHeight * 0.015),
+                Container(
+                  child: TextField(
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                      hintText: "Descrição",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
                 ),
-              ),
-              SizedBox(height: screenHeight * 0.06),
-              Container(
-                width: screenWidth * 0.3,
-                height: screenHeight * 0.05,
-                child: ElevatedButton(
-                  child: Text('Avançar', style: TextStyle(fontSize: 20)),
-                  onPressed: () {
-                    Navigator.pushNamed(context, Routes.PLACESTEP2);
-                  },
+                SizedBox(height: screenHeight * 0.015),
+                TextField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Número para contato',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
-              ),
-            ],
+                SizedBox(height: screenHeight * 0.06),
+                Container(
+                  width: screenWidth * 0.3,
+                  height: screenHeight * 0.05,
+                  child: ElevatedButton(
+                    child: Text('Avançar', style: TextStyle(fontSize: 20)),
+                    onPressed: () {
+                      Navigator.pushNamed(context, Routes.PLACESTEP2);
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

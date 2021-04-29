@@ -10,11 +10,13 @@ import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-
 import 'screens/profile/addPlace/place_step1.dart';
 import 'screens/profile/addPlace/place_step2.dart';
 import 'screens/profile/addPlace/place_step3.dart';
 import 'screens/profile/addPlace/place_step4.dart';
+import 'screens/profile/addProduct/product_step1.dart';
+import 'screens/profile/addProduct/product_step2.dart';
+import 'screens/profile/addProduct/product_step3.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -51,7 +53,7 @@ class App extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        Routes.HOME: (ctx) => PlaceStep1(),
+        Routes.HOME: (ctx) => Home(),
         Routes.LOGIN: (ctx) => Login(),
         Routes.DASHBOARD: (ctx) => Dashboard(),
         Routes.REGISTER: (ctx) => Register(),
@@ -61,6 +63,9 @@ class App extends StatelessWidget {
         Routes.PLACESTEP1: (ctx) => PlaceStep1(),
         Routes.PLACESTEP2: (ctx) => PlaceStep2(),
         Routes.PLACESTEP3: (ctx) => PlaceStep3(),
+        Routes.PRODUCTSTEP1: (ctx) => ProductStep1(),
+        Routes.PRODUCTSTEP2: (ctx) => ProductStep2(),
+        Routes.PRODUCTSTEP3: (ctx) => ProductStep3(),
         Routes.PLACESTEP4: (ctx) => PlaceStep4(),
         Routes.LOGINRECOVER: (ctx) => LoginRecover(),
       },

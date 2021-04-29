@@ -2,12 +2,12 @@ import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:ecofinder/utils/constants.dart';
 
-class PlaceStep2 extends StatefulWidget {
+class ProductStep1 extends StatefulWidget {
   @override
-  _PlaceStep2State createState() => _PlaceStep2State();
+  _ProductStep1State createState() => _ProductStep1State();
 }
 
-class _PlaceStep2State extends State<PlaceStep2> {
+class _ProductStep1State extends State<ProductStep1> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -16,7 +16,7 @@ class _PlaceStep2State extends State<PlaceStep2> {
     return Scaffold(
       backgroundColor: Constants.BACKGROUND,
       appBar: AppBar(
-        title: Text("Cadastrar novo local"),
+        title: Text("Cadastrar novo produto"),
         backgroundColor: Constants.TOPBOTTOM,
       ),
       body: SingleChildScrollView(
@@ -33,38 +33,35 @@ class _PlaceStep2State extends State<PlaceStep2> {
                   width: 150,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/map2.png'),
+                      image: AssetImage('assets/ecobag.jpg'),
                       fit: BoxFit.fill,
                     ),
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.015),
-                DropdownButton<String>(
-                  dropdownColor: Constants.TOPBOTTOM,
-                  isExpanded: true,
-                  hint: Text('Tipo do local'),
-                  items: <String>['Experiência', 'Ponto de coleta']
-                      .map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (_) {},
-                ),
-                SizedBox(height: screenHeight * 0.015),
                 TextField(
                   decoration: InputDecoration(
-                    labelText: 'Cidade',
+                    labelText: 'Nome',
                     border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.015),
+                Container(
+                  child: TextField(
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                      hintText: "Descrição",
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.015),
                 TextField(
                   decoration: InputDecoration(
-                    labelText: 'Endereço completo',
+                    labelText: 'Preço (R\$)',
                     border: OutlineInputBorder(),
                   ),
+                  keyboardType: TextInputType.number,
                 ),
                 SizedBox(height: screenHeight * 0.06),
                 Container(
@@ -73,7 +70,7 @@ class _PlaceStep2State extends State<PlaceStep2> {
                   child: ElevatedButton(
                     child: Text('Avançar', style: TextStyle(fontSize: 20)),
                     onPressed: () {
-                      Navigator.pushNamed(context, Routes.PLACESTEP3);
+                      Navigator.pushNamed(context, Routes.PRODUCTSTEP2);
                     },
                   ),
                 ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ecofinder/utils/constants.dart';
 
-class PlaceStep4 extends StatefulWidget {
+class ProductStep3 extends StatefulWidget {
   @override
-  _PlaceStep4State createState() => _PlaceStep4State();
+  _ProductStep3State createState() => _ProductStep3State();
 }
 
-class _PlaceStep4State extends State<PlaceStep4> {
+class _ProductStep3State extends State<ProductStep3> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -15,7 +15,7 @@ class _PlaceStep4State extends State<PlaceStep4> {
     return Scaffold(
       backgroundColor: Constants.BACKGROUND,
       appBar: AppBar(
-        title: Text("Cadastrar novo local"),
+        title: Text("Cadastrar novo produto"),
         backgroundColor: Constants.TOPBOTTOM,
       ),
       body: Container(
@@ -38,7 +38,7 @@ class _PlaceStep4State extends State<PlaceStep4> {
               ),
               SizedBox(height: screenHeight * 0.015),
               Text(
-                "Solicitação de cadastro de local enviada com sucesso.",
+                "Solicitação de cadastro de produto enviada com sucesso.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25,

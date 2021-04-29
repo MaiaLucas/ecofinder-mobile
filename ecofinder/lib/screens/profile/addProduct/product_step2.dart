@@ -4,18 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:ecofinder/utils/constants.dart';
 import 'package:image_picker/image_picker.dart';
 
-class PlaceStep3 extends StatefulWidget {
+class ProductStep2 extends StatefulWidget {
   @override
-  _PlaceStep3State createState() => _PlaceStep3State();
+  _ProductStep2State createState() => _ProductStep2State();
 }
 
-class _PlaceStep3State extends State<PlaceStep3> {
+class _ProductStep2State extends State<ProductStep2> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     File _image;
-    bool isOpen = false;
 
     _imgFromCamera() async {
       File image = await ImagePicker.pickImage(
@@ -68,7 +67,7 @@ class _PlaceStep3State extends State<PlaceStep3> {
     return Scaffold(
       backgroundColor: Constants.BACKGROUND,
       appBar: AppBar(
-        title: Text("Cadastrar novo local"),
+        title: Text("Cadastrar novo produto"),
         backgroundColor: Constants.TOPBOTTOM,
       ),
       body: SingleChildScrollView(
@@ -85,7 +84,7 @@ class _PlaceStep3State extends State<PlaceStep3> {
                   width: 150,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/map3.png'),
+                      image: AssetImage('assets/ecobag.jpg'),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -120,41 +119,18 @@ class _PlaceStep3State extends State<PlaceStep3> {
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.02),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: 'Abre às:',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: screenWidth * 0.03),
-                    Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: 'Fecha às:',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-                  ],
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: '@ no Instagram',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 SizedBox(height: screenHeight * 0.015),
-                CheckboxListTile(
-                  title: Text("Abre aos fins de semana?"),
-                  value: isOpen,
-                  onChanged: (newValue) {
-                    setState(() {
-                      isOpen = newValue;
-                    });
-                  },
-                  controlAffinity:
-                      ListTileControlAffinity.trailing, //  <-- leading Checkbox
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Link para Facebook',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 SizedBox(height: screenHeight * 0.035),
                 Container(
@@ -163,7 +139,7 @@ class _PlaceStep3State extends State<PlaceStep3> {
                   child: ElevatedButton(
                     child: Text('Cadastrar', style: TextStyle(fontSize: 20)),
                     onPressed: () {
-                      Navigator.pushNamed(context, Routes.PLACESTEP4);
+                      Navigator.pushNamed(context, Routes.PRODUCTSTEP3);
                     },
                   ),
                 ),

@@ -40,7 +40,7 @@ class Profile extends StatelessWidget {
       },
       {
         'name': 'Cadastrar Produto',
-        'action': () => {print('Cadastrar Produto')},
+        'action': () => {Navigator.pushNamed(context, Routes.PRODUCTSTEP1)},
         'isDense': true,
         'icon': Icon(CupertinoIcons.bag_fill, size: 30),
       },

@@ -10,6 +10,9 @@ class Routes {
   static const PLACESTEP2 = '/place_step2';
   static const PLACESTEP3 = '/place_step3';
   static const PLACESTEP4 = '/place_step4';
+  static const PRODUCTSTEP1 = '/product_step1';
+  static const PRODUCTSTEP2 = '/product_step2';
+  static const PRODUCTSTEP3 = '/product_step3';
   static const LOGINRECOVER = '/login_redover';
   static const TESTE = '/';
 }

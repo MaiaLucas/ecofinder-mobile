@@ -1,4 +1,4 @@
-import 'dart:convert';
+//import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecofinder/components/templates/card.dart';
@@ -94,7 +94,7 @@ class _PlaceDetailState extends State<PlaceDetail> {
                                 color: Color(0xFF34623f),
                                 info: data.description,
                                 size: 1,
-                                height: 0.15,
+                                height: 0.2,
                                 title: 'Descrição',
                               ),
                               // SizedBox(height: 20),

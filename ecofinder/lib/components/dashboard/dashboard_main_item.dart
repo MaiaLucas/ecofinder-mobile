@@ -50,38 +50,47 @@ class DashboardMainItem extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.07,
                   padding: EdgeInsets.only(left: 15, right: 15),
                   decoration: BoxDecoration(
-                    color: Colors.black12,
+                    color: Colors.black54,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10.0),
+                      bottomRight: Radius.circular(10.0),
+                    ),
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      AutoSizeText(
-                        name,
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
+                      Expanded(
+                        child: AutoSizeText(
+                          name,
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                          ),
                         ),
                       ),
-                      Row(
-                        children: [
-                          Icon(
-                            //Icons.star,
-                            CupertinoIcons.star_fill,
-                            color: Color(0xFFF6C209),
-                            size: 21,
-                          ),
-                          Text(
-                            (rating.toDouble()).toString(),
-                            style: TextStyle(
-                              color: Colors.black87,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Row(
+                          children: [
+                            Icon(
+                              //Icons.star,
+                              CupertinoIcons.star_fill,
+                              color: Color(0xFFF6C209),
+                              size: 21,
                             ),
-                          ),
-                        ],
+                            Text(
+                              (rating.toDouble()).toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

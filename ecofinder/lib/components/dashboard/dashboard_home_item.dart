@@ -59,7 +59,7 @@ class DashboardHomeItem extends StatelessWidget {
                       overflow: TextOverflow.fade,
                       maxLines: 2,
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: Colors.white,
                         fontSize: 17,
                       ),
                     ),
@@ -70,17 +70,20 @@ class DashboardHomeItem extends StatelessWidget {
                         Text(
                           (double.parse(rating)).toString(),
                           style: TextStyle(
-                            color: Colors.white70,
+                            color: Colors.white,
                             fontSize: 16,
                           ),
                         ),
                         SizedBox(
                           width: 5,
                         ),
-                        Icon(
-                          CupertinoIcons.star_fill,
-                          size: 20,
-                          color: Colors.amberAccent,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 5),
+                          child: Icon(
+                            CupertinoIcons.star_fill,
+                            size: 20,
+                            color: Colors.amberAccent,
+                          ),
                         ),
                       ],
                     ),

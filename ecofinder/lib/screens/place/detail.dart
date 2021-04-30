@@ -142,10 +142,10 @@ class _PlaceDetailState extends State<PlaceDetail> {
                         ),
                         child: ElevatedButton.icon(
                           icon: Icon(Icons.map_rounded),
-                          onPressed: () => {
-                            // "${data.address.replaceAll(' ', '+')},+${data.city.replaceAll(' ', '+')}"
-                            _getCurrentLocation(
-                                'R.+Monsenhor+Bruno,+1153,+Fortaleza')
+                          onPressed: () {
+                            final url =
+                                "${data.address.replaceAll(' ', '+')},+${data.city.replaceAll(' ', '+')}";
+                            _getCurrentLocation(url);
                           },
                           // color: Colors.black38,
                           label: Text(

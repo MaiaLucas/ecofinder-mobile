@@ -6,6 +6,7 @@ class Routes {
   static const PLACEDETAIL = '/place_detail';
   static const PRODUCTDETAIL = '/product_detail';
   static const PROFILEDETAIL = '/profile_detail';
+  static const ADDPLACE = '/add_place';
   static const PLACESTEP1 = '/place_step1';
   static const PLACESTEP2 = '/place_step2';
   static const PLACESTEP3 = '/place_step3';

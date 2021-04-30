@@ -5,6 +5,7 @@ import 'package:ecofinder/screens/login/login_recover.dart';
 import 'package:ecofinder/screens/login/register.dart';
 import 'package:ecofinder/screens/place/detail.dart';
 import 'package:ecofinder/screens/product/detail.dart';
+import 'package:ecofinder/screens/profile/addPlace/index.dart';
 import 'package:ecofinder/screens/profile/detail.dart';
 import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/material.dart';
@@ -39,11 +40,17 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Ecofinder',
       theme: ThemeData(
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            primary: Color(0xFF73a942),
+            side: BorderSide(color: Color(0xFF73a942), width: 2),
+          ),
+        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             primary: Color(0xFF004b23),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
+              borderRadius: BorderRadius.circular(10.0),
             ),
           ),
         ),
@@ -60,6 +67,7 @@ class App extends StatelessWidget {
         Routes.PLACEDETAIL: (ctx) => PlaceDetail(),
         Routes.PRODUCTDETAIL: (ctx) => ProductDetail(),
         Routes.PROFILEDETAIL: (ctx) => ProfileDetail(),
+        Routes.ADDPLACE: (ctx) => AddPlace(),
         Routes.PLACESTEP1: (ctx) => PlaceStep1(),
         Routes.PLACESTEP2: (ctx) => PlaceStep2(),
         Routes.PLACESTEP3: (ctx) => PlaceStep3(),

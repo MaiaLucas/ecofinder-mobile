@@ -1,5 +1,6 @@
 import 'package:ecofinder/app.dart';
 import 'package:ecofinder/providers/auth.dart';
+import 'package:ecofinder/providers/place.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => new AuthProvider()),
+        ChangeNotifierProvider(create: (_) => new PlaceProvider()),
       ],
       child: App(),
     );

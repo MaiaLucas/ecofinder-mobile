@@ -34,7 +34,7 @@ class Profile extends StatelessWidget {
       {
         'name': 'Cadastrar Local',
         //'action': () => {print('Cadastrar Local')},
-        'action': () => {Navigator.pushNamed(context, Routes.PLACESTEP1)},
+        'action': () => {Navigator.pushNamed(context, Routes.ADDPLACE)},
         'isDense': true,
         'icon': Icon(CupertinoIcons.placemark_fill, size: 30),
       },

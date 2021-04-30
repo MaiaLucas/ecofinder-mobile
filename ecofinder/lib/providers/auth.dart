@@ -40,8 +40,17 @@ class AuthProvider with ChangeNotifier {
 
   //Responsável pela autenticação do usuário
 
-  Future<void> _authenticate(Map<String, dynamic> data, String urlSegment,
-      BuildContext context) async {
+  Future<void> _authenticate(
+    Map<String, dynamic> data,
+    String urlSegment,
+    BuildContext context,
+  ) async {
+    Widget snackBar = SnackBar(
+      behavior: SnackBarBehavior.floating,
+      content: Text('Não foi possível entrar! Tente novamente',
+          style: TextStyle(color: Colors.white)),
+      backgroundColor: Colors.red,
+    );
     final response = await http.post(
       "${URLS.BASE_URL}/$urlSegment",
       body: jsonEncode(data),
@@ -51,7 +60,28 @@ class AuthProvider with ChangeNotifier {
     final responseBody = jsonDecode(response.body);
 
     if (responseBody['error'] != null) {
-      throw responseBody['message'];
+      // final errorMessage = responseBody['error'].runtimeType == String ? responseBody['error'] : 'foi';
+
+      if (responseBody['error'].runtimeType == String) {
+        snackBar = SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text(responseBody['error'],
+              style: TextStyle(color: Colors.white)),
+          backgroundColor: Colors.red,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } else {
+        responseBody['error'].map((error) {
+          snackBar = SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text(error, style: TextStyle(color: Colors.white)),
+            backgroundColor: Colors.red,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }).toList();
+      }
+
+      throw responseBody['error'];
     }
 
     _token = responseBody['token'];
@@ -72,6 +102,13 @@ class AuthProvider with ChangeNotifier {
     await getUser(responseBody['user']);
 
     // logout automatico
+    snackBar = SnackBar(
+      behavior: SnackBarBehavior.floating,
+      content: Text('Seja Bem Vindo!', style: TextStyle(color: Colors.white)),
+      backgroundColor: Colors.green,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     _autoLogout();
     notifyListeners();
     Navigator.pushNamed(context, Routes.DASHBOARD);

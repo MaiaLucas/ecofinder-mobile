@@ -1,7 +1,6 @@
 //import 'dart:convert';
 
 import 'package:ecofinder/providers/auth.dart';
-//import 'package:ecofinder/services/api.dart';
 import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +15,9 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final _emailController = TextEditingController();
   final _firstNameController = TextEditingController();
-  //final _lastNameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _formKey = GlobalKey<FormState>();
 
   Future<void> _submitForm(BuildContext context) async {
     final email = _emailController.text;
@@ -35,19 +33,18 @@ class _RegisterState extends State<Register> {
     };
     AuthProvider auth = Provider.of(context, listen: false);
 
-    try {
-      return await auth.signup(data, context);
-    } catch (error) {
-      final snackBar = SnackBar(
-        content: Text(error['message']),
-        backgroundColor: Colors.red,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
+    return await auth.signup(data, context);
   }
 
   bool notVisible = true;
   bool emailLength = false;
+
+  dynamic inputIsValid(value, field) {
+    if (value == null || value.isEmpty) {
+      return 'Campo $field é obrigatório';
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +52,6 @@ class _RegisterState extends State<Register> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      key: _scaffoldKey,
       body: SingleChildScrollView(
         physics: ClampingScrollPhysics(),
         child: Container(
@@ -63,101 +59,139 @@ class _RegisterState extends State<Register> {
           height: screenHeight,
           child: Padding(
             padding: const EdgeInsets.all(40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: screenHeight * 0.13,
-                  width: screenWidth,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/ecofinderlogo.png"),
-                      fit: BoxFit.cover,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: screenHeight * 0.13,
+                    width: screenWidth,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/ecofinderlogo.png"),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: screenHeight * 0.055),
-                //SizedBox(height: 50),
-                TextField(
-                  controller: _firstNameController,
-                  decoration: InputDecoration(
-                    labelText: 'Nome Completo',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.011),
-                TextField(
-                  controller: _emailController,
-                  onChanged: (value) {
-                    setState(() {
-                      emailLength = value.length > 0 ? true : false;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'E-mail',
-                    border: OutlineInputBorder(),
-                    suffixIcon: emailLength
-                        ? IconButton(
-                            onPressed: () => _emailController.clear(),
-                            icon: Icon(Icons.clear),
-                          )
-                        : null,
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.011),
-                //SizedBox(height: 10),
-                TextField(
-                  controller: _passwordController,
-                  obscureText: notVisible,
-                  decoration: InputDecoration(
-                    labelText: 'Senha',
-                    border: OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() => notVisible = !notVisible);
-                      },
-                      icon: Icon(
-                          notVisible ? Icons.visibility_off : Icons.visibility),
-                    ),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.011),
-                //SizedBox(height: 10),
-                TextField(
-                  controller: _confirmPasswordController,
-                  obscureText: notVisible,
-                  decoration: InputDecoration(
-                    labelText: 'Confirmar senha',
-                    border: OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() => notVisible = !notVisible);
-                      },
-                      icon: Icon(
-                          notVisible ? Icons.visibility_off : Icons.visibility),
-                    ),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.018),
-                //SizedBox(height: 10),
-                Container(
-                  width: screenWidth * 0.4,
-                  height: screenHeight * 0.07,
-                  child: ElevatedButton(
-                    child: Text('Cadastrar', style: TextStyle(fontSize: 25)),
-                    onPressed: () {
-                      _submitForm(context);
+                  SizedBox(height: screenHeight * 0.055),
+                  // NOME COMPLETO
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Este campo é obrigatório';
+                      }
+                      return null;
                     },
+                    controller: _firstNameController,
+                    decoration: InputDecoration(
+                      labelText: 'Nome Completo',
+                      border: OutlineInputBorder(),
+                    ),
                   ),
-                ),
-                SizedBox(height: screenHeight * 0.07),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.LOGIN);
-                  },
-                  child: Text('Já tem conta? Faça login!'),
-                ),
-              ],
+                  SizedBox(height: screenHeight * 0.011),
+                  // EMAIL
+                  TextFormField(
+                    controller: _emailController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Este campo é obrigatório';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        emailLength = value.length > 0 ? true : false;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'E-mail',
+                      border: OutlineInputBorder(),
+                      suffixIcon: emailLength
+                          ? IconButton(
+                              onPressed: () => _emailController.clear(),
+                              icon: Icon(Icons.clear),
+                            )
+                          : null,
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.011),
+                  // SENHA
+                  TextFormField(
+                    controller: _passwordController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Este campo é obrigatório';
+                      }
+                      if (_confirmPasswordController.text !=
+                          _passwordController.text) {
+                        return 'Senhas não conferem';
+                      }
+                      return null;
+                    },
+                    obscureText: notVisible,
+                    decoration: InputDecoration(
+                      labelText: 'Senha',
+                      border: OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() => notVisible = !notVisible);
+                        },
+                        icon: Icon(
+                          notVisible ? Icons.visibility_off : Icons.visibility,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.011),
+                  //CONFIRMAÇÃO
+                  TextFormField(
+                    controller: _confirmPasswordController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Este campo é obrigatório';
+                      }
+                      if (_confirmPasswordController.text !=
+                          _passwordController.text) {
+                        return 'Senhas não conferem';
+                      }
+                      return null;
+                    },
+                    obscureText: notVisible,
+                    decoration: InputDecoration(
+                      labelText: 'Confirmar senha',
+                      border: OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() => notVisible = !notVisible);
+                        },
+                        icon: Icon(notVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.018),
+                  Container(
+                    width: screenWidth * 0.4,
+                    height: screenHeight * 0.07,
+                    child: ElevatedButton(
+                      child: Text('Cadastrar', style: TextStyle(fontSize: 25)),
+                      onPressed: () {
+                        if (_formKey.currentState.validate())
+                          _submitForm(context);
+                      },
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.07),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, Routes.LOGIN);
+                    },
+                    child: Text('Já tem conta? Faça login!'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

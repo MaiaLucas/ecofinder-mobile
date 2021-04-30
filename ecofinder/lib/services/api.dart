@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:async';
+import 'dart:io';
 import 'package:ecofinder/models/Highlights.dart';
 import 'package:ecofinder/models/Place.dart';
 import 'package:ecofinder/models/Product.dart';
@@ -14,6 +15,11 @@ class ApiService {
     } else {
       return null;
     }
+  }
+
+  static dynamic recover(String email) async {
+    final response = await http.post("${URLS.BASE_URL}/recover?email=$email");
+    return jsonDecode(response.body);
   }
 
   //CARREGA AS INFORMAÇÕES DO DASHBOARD

@@ -1,6 +1,8 @@
 import 'package:ecofinder/providers/place.dart';
 import 'package:ecofinder/screens/profile/addPlace/place_step1.dart';
 import 'package:ecofinder/screens/profile/addPlace/place_step2.dart';
+import 'package:ecofinder/screens/profile/addPlace/place_step3.dart';
+import 'package:ecofinder/screens/profile/addPlace/confirmation.dart';
 import 'package:flutter/material.dart';
 import 'package:ecofinder/utils/constants.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +27,8 @@ class _AddPlaceState extends State<AddPlace> {
     List<Widget> steps = [
       PlaceStep1(),
       PlaceStep2(),
+      PlaceStep3(),
+      Confirmation(),
     ];
 
     return Scaffold(

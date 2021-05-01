@@ -6,7 +6,7 @@ import 'package:ecofinder/screens/login/register.dart';
 import 'package:ecofinder/screens/place/detail.dart';
 import 'package:ecofinder/screens/product/detail.dart';
 import 'package:ecofinder/screens/profile/addPlace/index.dart';
-import 'package:ecofinder/screens/profile/addPlace/review.dart';
+import 'package:ecofinder/screens/profile/addPlace/confirmation.dart';
 import 'package:ecofinder/screens/profile/detail.dart';
 import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +65,7 @@ class App extends StatelessWidget {
         Routes.PRODUCTDETAIL: (ctx) => ProductDetail(),
         Routes.PROFILEDETAIL: (ctx) => ProfileDetail(),
         Routes.ADDPLACE: (ctx) => AddPlace(),
-        Routes.REVIEW: (ctx) => Review(),
+        Routes.CONFIRMATION: (ctx) => Confirmation(),
         Routes.PRODUCTSTEP1: (ctx) => ProductStep1(),
         Routes.PRODUCTSTEP2: (ctx) => ProductStep2(),
         Routes.PRODUCTSTEP3: (ctx) => ProductStep3(),

@@ -53,6 +53,8 @@ class _ButtonState extends State<Buttons> {
                 if (placeProvider.currentStep < 2)
                   placeProvider.step = placeProvider.currentStep + 1;
                 else {
+                  if (content['images'] != null)
+                    placeProvider.image = content['images'];
                   placeProvider.create(context);
                 }
               }

@@ -18,9 +18,21 @@ class _PlaceStep1State extends State<PlaceStep1> {
 
     final content = placeProvider.createPlaceContent;
 
-    initialValue(val) {
-      return TextEditingController(text: val);
-    }
+    TextEditingController _titleController = TextEditingController(
+      text: content['title'] != null && content['title'].isNotEmpty
+          ? content['title']
+          : '',
+    );
+    TextEditingController _descriptionController = TextEditingController(
+      text: content['description'] != null && content['description'].isNotEmpty
+          ? content['description']
+          : '',
+    );
+    TextEditingController _phoneController = TextEditingController(
+      text: content['phone'] != null && content['phone'].isNotEmpty
+          ? content['phone']
+          : '',
+    );
 
     return Container(
       child: Padding(
@@ -31,7 +43,7 @@ class _PlaceStep1State extends State<PlaceStep1> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
-                controller: initialValue(content['title']),
+                initialValue: _titleController.text,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Este campo é obrigatório';
@@ -39,7 +51,9 @@ class _PlaceStep1State extends State<PlaceStep1> {
                   return null;
                 },
                 onSaved: (String val) {
-                  title = val;
+                  setState(() {
+                    title = val;
+                  });
                 },
                 decoration: InputDecoration(
                   labelText: 'Nome',
@@ -49,7 +63,7 @@ class _PlaceStep1State extends State<PlaceStep1> {
               SizedBox(height: screenHeight * 0.015),
               Container(
                 child: TextFormField(
-                  controller: initialValue(content['description']),
+                  initialValue: _descriptionController.text,
                   maxLines: 5,
                   onSaved: (String val) {
                     description = val;
@@ -63,7 +77,7 @@ class _PlaceStep1State extends State<PlaceStep1> {
               ),
               SizedBox(height: screenHeight * 0.015),
               TextFormField(
-                controller: initialValue(content['phone']),
+                initialValue: _phoneController.text,
                 onSaved: (String val) {
                   setState(() {
                     phone = val;

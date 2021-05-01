@@ -1,8 +1,7 @@
-import 'dart:io';
-import 'package:ecofinder/utils/routes.dart';
+import 'package:ecofinder/providers/place.dart';
+import 'package:ecofinder/screens/profile/widgets/buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:ecofinder/utils/constants.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class PlaceStep3 extends StatefulWidget {
   @override
@@ -10,162 +9,144 @@ class PlaceStep3 extends StatefulWidget {
 }
 
 class _PlaceStep3State extends State<PlaceStep3> {
+  final _formKey = GlobalKey<FormState>();
+  TimeOfDay now = TimeOfDay.now();
+  TimeOfDay hrInit = TimeOfDay(hour: 00, minute: 00);
+  TimeOfDay hrFinal = TimeOfDay(hour: 00, minute: 00);
+
+  TextEditingController _hrInitController = TextEditingController(),
+      _hrFinalController = TextEditingController();
+
+  String hrInitStr, hrFinalStr;
+
+  Future<Null> _selectTime({
+    BuildContext context,
+    TextEditingController controller,
+    TimeOfDay timer,
+    String text,
+  }) async {
+    final TimeOfDay picked = await showTimePicker(
+      context: context,
+      initialTime: timer,
+    );
+
+    if (picked != null) {
+      setState(() {
+        timer = picked;
+        controller.text = timer.format(context);
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    PlaceProvider placeProvider = Provider.of(context);
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    File _image;
-    bool isOpen = false;
 
-    _imgFromCamera() async {
-      File image = await ImagePicker.pickImage(
-          source: ImageSource.camera, imageQuality: 50);
-
-      setState(() {
-        _image = image;
-      });
-    }
-
-    _imgFromGallery() async {
-      File image = await ImagePicker.pickImage(
-          source: ImageSource.gallery, imageQuality: 50);
-
-      setState(() {
-        _image = image;
-      });
-    }
-
-    void _showPicker(context) {
-      showModalBottomSheet(
-          context: context,
-          builder: (BuildContext bc) {
-            return SafeArea(
-              child: Container(
-                child: Wrap(
-                  children: <Widget>[
-                    ListTile(
-                        leading: Icon(Icons.photo_library),
-                        title: Text('Photo Library'),
-                        onTap: () {
-                          _imgFromGallery();
-                          Navigator.of(context).pop();
-                        }),
-                    ListTile(
-                      leading: Icon(Icons.photo_camera),
-                      title: Text('Camera'),
-                      onTap: () {
-                        _imgFromCamera();
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            );
-          });
-    }
-
-    return Scaffold(
-      backgroundColor: Constants.BACKGROUND,
-      appBar: AppBar(
-        title: Text("Cadastrar novo local"),
-        backgroundColor: Constants.TOPBOTTOM,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: screenHeight,
-          width: screenWidth,
-          child: Padding(
-            padding: const EdgeInsets.all(40),
+    return SingleChildScrollView(
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(40),
+          child: Form(
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/map3.png'),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                SizedBox(
+                  height: 15,
                 ),
-                SizedBox(height: screenHeight * 0.03),
-                Container(
-                  child: GestureDetector(
-                    onTap: () {
-                      _showPicker(context);
-                    },
-                    child: Container(
-                      child: _image != null
-                          ? Container(
-                              child: ClipRRect(
-                                child: Image.file(
-                                  _image,
-                                  width: 100,
-                                  height: 100,
-                                  fit: BoxFit.fitHeight,
-                                ),
-                              ),
-                            )
-                          : Container(
-                              decoration: BoxDecoration(color: Colors.white24),
-                              width: screenWidth,
-                              height: screenHeight * 0.23,
-                              child: Center(
-                                child: Text("Adicionar uma imagem"),
-                              ),
-                            ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.02),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: 'Abre às:',
-                          border: OutlineInputBorder(),
+                      child: InkWell(
+                        onTap: () {
+                          _selectTime(
+                            context: context,
+                            timer: hrInit,
+                            controller: _hrInitController,
+                            text: hrInitStr,
+                          );
+                        },
+                        child: TextFormField(
+                          keyboardType: TextInputType.datetime,
+                          controller: _hrInitController,
+                          enabled: false,
+                          onSaved: (value) {
+                            hrInitStr = value;
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty)
+                              return 'Este campo é obrigatório';
+
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Abre às:',
+                            border: OutlineInputBorder(),
+                          ),
                         ),
                       ),
                     ),
                     SizedBox(width: screenWidth * 0.03),
                     Expanded(
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: 'Fecha às:',
-                          border: OutlineInputBorder(),
+                      child: InkWell(
+                        onTap: () {
+                          _selectTime(
+                            context: context,
+                            timer: hrFinal,
+                            controller: _hrFinalController,
+                            text: hrFinalStr,
+                          );
+                        },
+                        child: TextFormField(
+                          enabled: false,
+                          controller: _hrFinalController,
+                          keyboardType: TextInputType.datetime,
+                          onSaved: (value) {
+                            hrFinalStr = value;
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty)
+                              return 'Este campo é obrigatório';
+
+                            if (hrInit.hour > hrFinal.hour)
+                              return 'Defina um horário mais tarde';
+
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Fecha às:',
+                            border: OutlineInputBorder(),
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: screenHeight * 0.015),
-                CheckboxListTile(
-                  title: Text("Abre aos fins de semana?"),
-                  value: isOpen,
-                  onChanged: (newValue) {
-                    setState(() {
-                      isOpen = newValue;
-                    });
-                  },
-                  controlAffinity:
-                      ListTileControlAffinity.trailing, //  <-- leading Checkbox
+                SizedBox(
+                  height: 15,
                 ),
-                SizedBox(height: screenHeight * 0.035),
-                Container(
-                  width: screenWidth * 0.3,
-                  height: screenHeight * 0.05,
-                  child: ElevatedButton(
-                    child: Text('Cadastrar', style: TextStyle(fontSize: 20)),
-                    onPressed: () {
-                      Navigator.pushNamed(context, Routes.PLACESTEP4);
-                    },
-                  ),
+                Buttons(
+                  isValid: () {
+                    return _formKey.currentState.validate();
+                  },
+                  stepContent: () {
+                    _formKey.currentState.save();
+                    Map<String, dynamic> stepContent = {
+                      'hr_init': hrInitStr,
+                      'hr_final': hrFinalStr,
+                      // 'open_on_weekend': isOpen,
+                    };
+
+                    return stepContent;
+                  },
                 ),
               ],
             ),

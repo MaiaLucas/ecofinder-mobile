@@ -15,9 +15,10 @@ class _PlaceStep2State extends State<PlaceStep2> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     PlaceProvider placeProvider = Provider.of(context);
-    String city = '', address = '', type;
-
     final content = placeProvider.createPlaceContent;
+
+    String city = '', address = '';
+    dynamic type = content['type'] != null ? content['type'] : 1;
 
     initialValue(val) {
       return TextEditingController(text: val);
@@ -32,7 +33,7 @@ class _PlaceStep2State extends State<PlaceStep2> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               DropdownButtonFormField<String>(
-                value: type,
+                value: type.toString(),
                 dropdownColor: Constants.TOPBOTTOM,
                 isExpanded: true,
                 hint: Text('Tipo do local'),
@@ -54,13 +55,16 @@ class _PlaceStep2State extends State<PlaceStep2> {
                 onChanged: (_) {},
                 onSaved: (String val) {
                   setState(() {
-                    type = val;
+                    type = int.tryParse(val);
                   });
                 },
               ),
               SizedBox(height: screenHeight * 0.015),
               TextFormField(
-                controller: initialValue(content['city']),
+                initialValue:
+                    content['city'] != null && content['city'].isNotEmpty
+                        ? content['city']
+                        : '',
                 onSaved: (String val) {
                   setState(() {
                     city = val;
@@ -79,7 +83,10 @@ class _PlaceStep2State extends State<PlaceStep2> {
               ),
               SizedBox(height: screenHeight * 0.015),
               TextFormField(
-                controller: initialValue(content['address']),
+                initialValue:
+                    content['address'] != null && content['address'].isNotEmpty
+                        ? content['address']
+                        : '',
                 decoration: InputDecoration(
                   labelText: 'Endereço completo',
                   border: OutlineInputBorder(),

@@ -43,16 +43,18 @@ class _ButtonState extends State<Buttons> {
           child: ElevatedButton(
             child: Text('Avançar', style: TextStyle(fontSize: 20)),
             onPressed: () {
-              print(placeProvider.createPlaceContent);
               if (widget.isValid()) {
                 final content = widget.stepContent();
-                print(content);
 
                 placeProvider.createPlace = {
                   ...placeProvider.createPlaceContent,
                   ...content,
                 };
-                placeProvider.step = placeProvider.currentStep + 1;
+                if (placeProvider.currentStep < 2)
+                  placeProvider.step = placeProvider.currentStep + 1;
+                else {
+                  placeProvider.create(context);
+                }
               }
             },
           ),

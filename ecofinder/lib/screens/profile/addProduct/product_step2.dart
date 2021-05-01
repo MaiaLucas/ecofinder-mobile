@@ -17,21 +17,21 @@ class _ProductStep2State extends State<ProductStep2> {
     File _image;
 
     _imgFromCamera() async {
-      File image = await ImagePicker.pickImage(
-          source: ImageSource.camera, imageQuality: 50);
+      // File image = await ImagePicker.pickImage(
+      //     source: ImageSource.camera, imageQuality: 50);
 
-      setState(() {
-        _image = image;
-      });
+      // setState(() {
+      //   _image = image;
+      // });
     }
 
     _imgFromGallery() async {
-      File image = await ImagePicker.pickImage(
-          source: ImageSource.gallery, imageQuality: 50);
+      // File image = await ImagePicker.pickImage(
+      //     source: ImageSource.gallery, imageQuality: 50);
 
-      setState(() {
-        _image = image;
-      });
+      // setState(() {
+      //   _image = image;
+      // });
     }
 
     void _showPicker(context) {

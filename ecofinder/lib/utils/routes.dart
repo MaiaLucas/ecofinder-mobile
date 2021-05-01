@@ -7,10 +7,7 @@ class Routes {
   static const PRODUCTDETAIL = '/product_detail';
   static const PROFILEDETAIL = '/profile_detail';
   static const ADDPLACE = '/add_place';
-  static const PLACESTEP1 = '/place_step1';
-  static const PLACESTEP2 = '/place_step2';
-  static const PLACESTEP3 = '/place_step3';
-  static const PLACESTEP4 = '/place_step4';
+  static const REVIEW = '/review';
   static const PRODUCTSTEP1 = '/product_step1';
   static const PRODUCTSTEP2 = '/product_step2';
   static const PRODUCTSTEP3 = '/product_step3';

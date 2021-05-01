@@ -60,8 +60,6 @@ class AuthProvider with ChangeNotifier {
     final responseBody = jsonDecode(response.body);
 
     if (responseBody['error'] != null) {
-      // final errorMessage = responseBody['error'].runtimeType == String ? responseBody['error'] : 'foi';
-
       if (responseBody['error'].runtimeType == String) {
         snackBar = SnackBar(
           behavior: SnackBarBehavior.floating,

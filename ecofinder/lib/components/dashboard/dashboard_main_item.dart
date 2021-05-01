@@ -20,9 +20,10 @@ class DashboardMainItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final highlight = this.image['images'].length > 0
-        ? this.image['images'][0]['path']
-        : Constants.NO_IMAGE;
+    final highlight =
+        this.image['images'] != null && this.image['images'].length > 0
+            ? this.image['images'][0]['path']
+            : Constants.NO_IMAGE;
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, Routes.PLACEDETAIL, arguments: {'id': id});

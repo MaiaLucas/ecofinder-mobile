@@ -1,10 +1,12 @@
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:io';
+import 'package:http_parser/http_parser.dart';
 
 import 'package:ecofinder/services/urls.dart';
 import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mime/mime.dart';
 
 class PlaceProvider with ChangeNotifier {
   Map<String, dynamic> _createPlace = {
@@ -19,7 +21,17 @@ class PlaceProvider with ChangeNotifier {
     'hr_final': '',
   };
 
+  List<String> _images = [];
+
   int _currentStep = 2;
+
+  set image(String image) {
+    _images.add(image);
+  }
+
+  get imageList {
+    return _images;
+  }
 
   set createPlace(Map<String, dynamic> value) {
     _createPlace = value;
@@ -39,16 +51,45 @@ class PlaceProvider with ChangeNotifier {
     return _currentStep;
   }
 
-  Future<void> create(context) async {
+  Future<http.StreamedResponse> create(context) async {
+    final requestUrl = Uri.parse("${URLS.BASE_URL}/place");
+    final mimeTypeData =
+        lookupMimeType(_images[0], headerBytes: [0xFF, 0xD8]).split('/');
+
+    final imageUploaderRequest = http.MultipartRequest('POST', requestUrl);
+
+    final images = await http.MultipartFile.fromPath(
+      'images',
+      _images[0],
+      contentType: MediaType(mimeTypeData[0], mimeTypeData[1]),
+    );
+
+    imageUploaderRequest.files.add(images);
+    imageUploaderRequest.headers
+        .addAll({"Content-Type": "multipart/form-data"});
+    imageUploaderRequest.fields['type'] = _createPlace['type'].toString();
+    imageUploaderRequest.fields['title'] = _createPlace['title'];
+    imageUploaderRequest.fields['description'] = _createPlace['description'];
+    imageUploaderRequest.fields['phone'] = _createPlace['phone'];
+    imageUploaderRequest.fields['address'] = _createPlace['address'];
+    imageUploaderRequest.fields['city'] = _createPlace['city'];
+    imageUploaderRequest.fields['open_on_weekend'] =
+        _createPlace['open_on_weekend'].toString();
+    imageUploaderRequest.fields['hr_init'] = _createPlace['hr_init'];
+    imageUploaderRequest.fields['hr_final'] = _createPlace['hr_final'];
     try {
-      final response = await http.post(
-        "${URLS.BASE_URL}/place",
+      final streamedResponse = await imageUploaderRequest.send();
+      http.Response.fromStream(streamedResponse);
+
+      final apiResponse = await http.post(
+        requestUrl,
         body: jsonEncode(_createPlace),
         headers: {"Content-Type": "application/json"},
       );
 
-      final responseBody = jsonDecode(response.body);
-      if (response.statusCode != 200 && responseBody['error'])
+      final responseBody = jsonDecode(apiResponse.body);
+
+      if (apiResponse.statusCode != 200 && responseBody['error'])
         throw responseBody['error'];
 
       Navigator.pushNamed(context, Routes.CONFIRMATION);
@@ -66,7 +107,5 @@ class PlaceProvider with ChangeNotifier {
 
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
-
-    // print(responseBody);
   }
 }

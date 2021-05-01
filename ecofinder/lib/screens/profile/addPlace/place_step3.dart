@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:ecofinder/providers/place.dart';
 import 'package:ecofinder/screens/profile/widgets/buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class PlaceStep3 extends StatefulWidget {
@@ -18,6 +21,8 @@ class _PlaceStep3State extends State<PlaceStep3> {
       _hrFinalController = TextEditingController();
 
   String hrInitStr, hrFinalStr;
+  PickedFile image;
+  final _picker = ImagePicker();
 
   Future<Null> _selectTime({
     BuildContext context,
@@ -43,10 +48,44 @@ class _PlaceStep3State extends State<PlaceStep3> {
     super.initState();
   }
 
+  pickImage(ImageSource source, PlaceProvider provider) async {
+    final file = await _picker.getImage(
+      source: source,
+      imageQuality: 50,
+    );
+
+    setState(() {
+      // _image = File(file.path);
+      image = file;
+    });
+  }
+
+  void _showPicker(context, PlaceProvider provider) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return SafeArea(
+          child: Container(
+            child: Wrap(
+              children: <Widget>[
+                ListTile(
+                    leading: Icon(Icons.photo_library),
+                    title: Text('Photo Library'),
+                    onTap: () {
+                      pickImage(ImageSource.gallery, provider);
+                      Navigator.of(context).pop();
+                    }),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     PlaceProvider placeProvider = Provider.of(context);
-    double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
     return SingleChildScrollView(
@@ -58,6 +97,40 @@ class _PlaceStep3State extends State<PlaceStep3> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Container(
+                  child: GestureDetector(
+                    onTap: () {
+                      _showPicker(context, placeProvider);
+                    },
+                    child: Row(children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white24,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        width: 70,
+                        height: 70,
+                        child: Center(
+                          child: Icon(Icons.camera_alt_outlined),
+                        ),
+                      ),
+                      image != null
+                          ? Container(
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                                child: Image.file(
+                                  File(image.path),
+                                  width: 70,
+                                  height: 70,
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                            )
+                          : SizedBox(),
+                    ]),
+                  ),
+                ),
                 SizedBox(
                   height: 15,
                 ),
@@ -142,6 +215,7 @@ class _PlaceStep3State extends State<PlaceStep3> {
                     Map<String, dynamic> stepContent = {
                       'hr_init': hrInitStr,
                       'hr_final': hrFinalStr,
+                      'images': image.path,
                       // 'open_on_weekend': isOpen,
                     };
 

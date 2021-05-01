@@ -8,8 +8,12 @@ import 'package:ecofinder/services/urls.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
+  static Uri url(String path) {
+    return Uri.parse('${URLS.BASE_URL}/$path');
+  }
+
   static Future<List<dynamic>> getUser() async {
-    final response = await http.get("${URLS.BASE_URL}/user");
+    final response = await http.get(url("user"));
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
@@ -18,13 +22,13 @@ class ApiService {
   }
 
   static dynamic recover(String email) async {
-    final response = await http.post("${URLS.BASE_URL}/recover?email=$email");
+    final response = await http.post(url("recover?email=$email"));
     return jsonDecode(response.body);
   }
 
   //CARREGA AS INFORMAÇÕES DO DASHBOARD
   static Future<Highlights> loadDashboardInfo() async {
-    final response = await http.get("${URLS.BASE_URL}/dashboard?page=7");
+    final response = await http.get(url("dashboard?page=7"));
     if (response.statusCode == 200) {
       return Highlights.fromJson(jsonDecode(response.body));
     } else {
@@ -34,8 +38,7 @@ class ApiService {
 
   //CARREGA AS INFORMAÇÕES DO DASHBOARD
   static Future<Place> placeDetail(int id) async {
-    final response =
-        await http.get("${URLS.BASE_URL}/place/detail/${id.toString()}");
+    final response = await http.get(url("place/detail/${id.toString()}"));
     if (response.statusCode == 200) {
       return Place.fromJson(jsonDecode(response.body));
     } else {
@@ -53,8 +56,7 @@ class ApiService {
     if (type.isNotEmpty) {
       searchType = "type=$type";
     }
-    final response =
-        await http.get("${URLS.BASE_URL}/search_place?$searchCity$searchType");
+    final response = await http.get(url("search_place?$searchCity$searchType"));
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
       // return Place.fromJson(jsonDecode(response.body));
@@ -65,8 +67,7 @@ class ApiService {
 
   //CARREGA AS INFORMAÇÕES DO DASHBOARD
   static Future<dynamic> searchProduct({String products}) async {
-    final response =
-        await http.get("${URLS.BASE_URL}/product/search?product=$products");
+    final response = await http.get(url("product/search?product=$products"));
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
       // return Place.fromJson(jsonDecode(response.body));
@@ -77,8 +78,7 @@ class ApiService {
 
   //CARREGA AS INFORMAÇÕES DO DASHBOARD
   static Future<Product> productDetail(int id) async {
-    final response =
-        await http.get("${URLS.BASE_URL}/product/${id.toString()}");
+    final response = await http.get(url("product/${id.toString()}"));
     if (response.statusCode == 200) {
       return Product.fromJson(jsonDecode(response.body));
     } else {

@@ -52,11 +52,10 @@ class AuthProvider with ChangeNotifier {
       backgroundColor: Colors.red,
     );
     final response = await http.post(
-      "${URLS.BASE_URL}/$urlSegment",
+      Uri.parse("${URLS.BASE_URL}/$urlSegment"),
       body: jsonEncode(data),
       headers: {"Content-Type": "application/json"},
     );
-
     final responseBody = jsonDecode(response.body);
 
     if (responseBody['error'] != null) {
@@ -171,7 +170,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> getUser(String id) async {
     final response = await http.get(
-      "${URLS.BASE_URL}/user/$id",
+      Uri.parse("${URLS.BASE_URL}/user/$id"),
     );
 
     final responseBody = jsonDecode(response.body);

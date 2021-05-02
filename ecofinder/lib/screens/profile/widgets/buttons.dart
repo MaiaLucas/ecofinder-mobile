@@ -6,10 +6,12 @@ class Buttons extends StatefulWidget {
   bool hasBackButton;
   final isValid;
   final stepContent;
+  final provider;
   Buttons(
       {this.hasBackButton = true,
       this.isValid = false,
       this.stepContent,
+      this.provider,
       Key key})
       : super(key: key);
 
@@ -32,7 +34,7 @@ class _ButtonState extends State<Buttons> {
                 child: OutlinedButton(
                   child: Text('Voltar', style: TextStyle(fontSize: 20)),
                   onPressed: () {
-                    placeProvider.step = placeProvider.currentStep - 1;
+                    widget.provider.step = widget.provider.currentStep - 1;
                   },
                 ),
               )
@@ -45,17 +47,13 @@ class _ButtonState extends State<Buttons> {
             onPressed: () {
               if (widget.isValid()) {
                 final content = widget.stepContent();
-
-                placeProvider.createPlace = {
-                  ...placeProvider.createPlaceContent,
-                  ...content,
-                };
-                if (placeProvider.currentStep < 2)
-                  placeProvider.step = placeProvider.currentStep + 1;
+                widget.provider.object = content;
+                if (widget.provider.currentStep < 2)
+                  widget.provider.step = widget.provider.currentStep + 1;
                 else {
                   if (content['images'] != null)
-                    placeProvider.image = content['images'];
-                  placeProvider.create(context);
+                    widget.provider.image = content['images'];
+                  widget.provider.create(context);
                 }
               }
             },

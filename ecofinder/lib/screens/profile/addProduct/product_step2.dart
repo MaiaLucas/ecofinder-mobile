@@ -1,8 +1,10 @@
 import 'dart:io';
-import 'package:ecofinder/utils/routes.dart';
+
+import 'package:ecofinder/providers/product.dart';
+import 'package:ecofinder/screens/profile/widgets/buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:ecofinder/utils/constants.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class ProductStep2 extends StatefulWidget {
   @override
@@ -10,142 +12,153 @@ class ProductStep2 extends StatefulWidget {
 }
 
 class _ProductStep2State extends State<ProductStep2> {
+  final _formKey = GlobalKey<FormState>();
+
+  PickedFile image;
+  final _picker = ImagePicker();
+
   @override
-  Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-    File _image;
+  void initState() {
+    super.initState();
+  }
 
-    _imgFromCamera() async {
-      // File image = await ImagePicker.pickImage(
-      //     source: ImageSource.camera, imageQuality: 50);
+  pickImage(ImageSource source, ProductProvider provider) async {
+    final file = await _picker.getImage(
+      source: source,
+      imageQuality: 50,
+    );
 
-      // setState(() {
-      //   _image = image;
-      // });
-    }
+    setState(() {
+      // _image = File(file.path);
+      image = file;
+    });
+  }
 
-    _imgFromGallery() async {
-      // File image = await ImagePicker.pickImage(
-      //     source: ImageSource.gallery, imageQuality: 50);
-
-      // setState(() {
-      //   _image = image;
-      // });
-    }
-
-    void _showPicker(context) {
-      showModalBottomSheet(
-          context: context,
-          builder: (BuildContext bc) {
-            return SafeArea(
-              child: Container(
-                child: Wrap(
-                  children: <Widget>[
-                    ListTile(
-                        leading: Icon(Icons.photo_library),
-                        title: Text('Photo Library'),
-                        onTap: () {
-                          _imgFromGallery();
-                          Navigator.of(context).pop();
-                        }),
-                    ListTile(
-                      leading: Icon(Icons.photo_camera),
-                      title: Text('Camera'),
-                      onTap: () {
-                        _imgFromCamera();
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            );
-          });
-    }
-
-    return Scaffold(
-      backgroundColor: Constants.BACKGROUND,
-      appBar: AppBar(
-        title: Text("Cadastrar novo produto"),
-        backgroundColor: Constants.TOPBOTTOM,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: screenHeight,
-          width: screenWidth,
-          child: Padding(
-            padding: const EdgeInsets.all(40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/ecobag.png'),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.03),
-                Container(
-                  child: GestureDetector(
+  void _showPicker(context, ProductProvider provider) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return SafeArea(
+          child: Container(
+            child: Wrap(
+              children: <Widget>[
+                ListTile(
+                    leading: Icon(Icons.photo_library),
+                    title: Text('Photo Library'),
                     onTap: () {
-                      _showPicker(context);
-                    },
-                    child: Container(
-                      child: _image != null
-                          ? Container(
-                              child: ClipRRect(
-                                child: Image.file(
-                                  _image,
-                                  width: 100,
-                                  height: 100,
-                                  fit: BoxFit.fitHeight,
-                                ),
-                              ),
-                            )
-                          : Container(
-                              decoration: BoxDecoration(color: Colors.white24),
-                              width: screenWidth,
-                              height: screenHeight * 0.23,
-                              child: Center(
-                                child: Text("Adicionar uma imagem"),
-                              ),
-                            ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.02),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: '@ no Instagram',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.015),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Link para Facebook',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.035),
-                Container(
-                  width: screenWidth * 0.3,
-                  height: screenHeight * 0.05,
-                  child: ElevatedButton(
-                    child: Text('Cadastrar', style: TextStyle(fontSize: 20)),
-                    onPressed: () {
-                      Navigator.pushNamed(context, Routes.PRODUCTSTEP3);
-                    },
-                  ),
-                ),
+                      pickImage(ImageSource.gallery, provider);
+                      Navigator.of(context).pop();
+                    }),
               ],
             ),
           ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    ProductProvider productProvider = Provider.of(context);
+    final content = productProvider.createObject;
+
+    TextEditingController _instagramController = TextEditingController(
+      text: content['instagram_account'] != null
+          ? content['instagram_account']
+          : '',
+    );
+    TextEditingController _facebookController = TextEditingController(
+      text: content['facebook_link'] != null ? content['facebook_link'] : '',
+    );
+
+    String _instaAccount, _facebookLink;
+
+    return Padding(
+      padding: const EdgeInsets.all(40),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              child: GestureDetector(
+                onTap: () {
+                  _showPicker(context, productProvider);
+                },
+                child: Row(children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white24,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    width: 70,
+                    height: 70,
+                    child: Center(
+                      child: Icon(Icons.camera_alt_outlined),
+                    ),
+                  ),
+                  image != null
+                      ? Container(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            child: Image.file(
+                              File(image.path),
+                              width: 70,
+                              height: 70,
+                              fit: BoxFit.fitHeight,
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
+                ]),
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.02),
+            TextFormField(
+              initialValue: _instagramController.text,
+              onSaved: (val) {
+                setState(() {
+                  _instaAccount = val;
+                });
+              },
+              decoration: InputDecoration(
+                labelText: '@ no Instagram',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.015),
+            TextFormField(
+              initialValue: _facebookController.text,
+              onSaved: (val) {
+                setState(() {
+                  _facebookLink = val;
+                });
+              },
+              decoration: InputDecoration(
+                labelText: 'Link para Facebook',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.035),
+            Buttons(
+              provider: productProvider,
+              isLastStep: true,
+              isValid: () {
+                return _formKey.currentState.validate();
+              },
+              stepContent: () {
+                _formKey.currentState.save();
+                Map<String, dynamic> stepContent = {
+                  'facebook_link': _facebookLink,
+                  'instagram_account': _instaAccount,
+                  'images': image != null ? image.path : ''
+                };
+
+                return stepContent;
+              },
+            )
+          ],
         ),
       ),
     );

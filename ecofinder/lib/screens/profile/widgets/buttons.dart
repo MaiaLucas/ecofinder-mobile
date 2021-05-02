@@ -7,9 +7,11 @@ class Buttons extends StatefulWidget {
   final isValid;
   final stepContent;
   final provider;
+  final isLastStep;
   Buttons(
       {this.hasBackButton = true,
       this.isValid = false,
+      this.isLastStep = false,
       this.stepContent,
       this.provider,
       Key key})
@@ -48,10 +50,11 @@ class _ButtonState extends State<Buttons> {
               if (widget.isValid()) {
                 final content = widget.stepContent();
                 widget.provider.object = content;
-                if (widget.provider.currentStep < 2)
+                if (!widget.isLastStep)
                   widget.provider.step = widget.provider.currentStep + 1;
                 else {
-                  if (content['images'] != null)
+                  if (content['images'] != null &&
+                      content['images'].runtimeType != String)
                     widget.provider.image = content['images'];
                   widget.provider.create(context);
                 }

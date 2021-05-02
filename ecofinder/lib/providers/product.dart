@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:http_parser/http_parser.dart';
 
@@ -10,8 +11,8 @@ import 'package:mime/mime.dart';
 
 class ProductProvider with ChangeNotifier {
   Map<String, dynamic> _createProduct = {
-    'title': 'a',
-    'description': 'a',
+    'title': '',
+    'description': '',
     'price': 0,
     'facebook_link': '',
     'instagram_account': ''
@@ -50,59 +51,59 @@ class ProductProvider with ChangeNotifier {
 
   void _resetProductObj() {
     object = {
-      'title': 'a',
-      'description': 'a',
-      'price': 0,
+      'title': '',
+      'description': '',
+      'price': '',
       'facebook_link': '',
       'instagram_account': ''
     };
+    step = 0;
   }
 
-  Future<http.StreamedResponse> create(context) async {
+  // Future<http.StreamedResponse>
+  create(context) async {
     final requestUrl = Uri.parse("${URLS.BASE_URL}/product");
-    final mimeTypeData =
-        lookupMimeType(_images[0], headerBytes: [0xFF, 0xD8]).split('/');
 
-    final imageUploaderRequest = http.MultipartRequest('POST', requestUrl);
-
-    final images = await http.MultipartFile.fromPath(
-      'images',
-      _images[0],
-      contentType: MediaType(mimeTypeData[0], mimeTypeData[1]),
-    );
-
-    imageUploaderRequest.files.add(images);
-    imageUploaderRequest.headers
+    final streamedRequest = http.MultipartRequest('POST', requestUrl);
+    await streamedRequest.headers
         .addAll({"Content-Type": "multipart/form-data"});
-    imageUploaderRequest.fields['title'] = _createProduct['title'];
-    imageUploaderRequest.fields['description'] = _createProduct['description'];
-    imageUploaderRequest.fields['price'] = _createProduct['price'].toString();
-    imageUploaderRequest.fields['facebook_link'] =
-        _createProduct['facebook_link'];
-    imageUploaderRequest.fields['instagram_account'] =
+
+    if (_images.isNotEmpty) {
+      print('tem image');
+      final mimeTypeData =
+          lookupMimeType(_images[0], headerBytes: [0xFF, 0xD8]).split('/');
+
+      final images = await http.MultipartFile.fromPath(
+        'images',
+        _images[0],
+        contentType: MediaType(mimeTypeData[0], mimeTypeData[1]),
+      );
+      await streamedRequest.files.add(images);
+    }
+
+    streamedRequest.fields['title'] = _createProduct['title'];
+    streamedRequest.fields['description'] = _createProduct['description'];
+    streamedRequest.fields['price'] = _createProduct['price'];
+    streamedRequest.fields['facebook_link'] = _createProduct['facebook_link'];
+    streamedRequest.fields['instagram_account'] =
         _createProduct['instagram_account'];
     try {
-      final streamedResponse = await imageUploaderRequest.send();
-      http.Response.fromStream(streamedResponse);
+      final streamedResponse = await streamedRequest.send();
+      final response = await http.Response.fromStream(streamedResponse);
 
-      final apiResponse = await http.post(
-        requestUrl,
-        body: jsonEncode(_createProduct),
-        headers: {"Content-Type": "application/json"},
-      );
+      final responseBody = jsonDecode(response.body);
 
-      final responseBody = jsonDecode(apiResponse.body);
-
-      if (apiResponse.statusCode != 200 && responseBody['error'])
+      if (response.statusCode != 200 && responseBody['error'])
         throw responseBody['error'];
 
       Navigator.pushNamed(context, Routes.CONFIRMATION);
       _resetProductObj();
     } catch (e) {
+      print(e);
       Widget snackBar = SnackBar(
         behavior: SnackBarBehavior.floating,
         content: Text(
-          e != null
+          e != null && e.runtimeType == String
               ? e
               : 'Não foi possível cadastrar! Tente novamente mais tarde',
           style: TextStyle(color: Colors.white),

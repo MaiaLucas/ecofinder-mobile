@@ -10,12 +10,12 @@ import 'package:mime/mime.dart';
 
 class PlaceProvider with ChangeNotifier {
   Map<String, dynamic> _createPlace = {
-    'title': 'a',
+    'title': '',
     'type': 1,
-    'description': 'a',
-    'phone': 'a',
-    'address': 'a',
-    'city': 'a',
+    'description': '',
+    'phone': '',
+    'address': '',
+    'city': '',
     'open_on_weekend': true,
     'hr_init': '',
     'hr_final': '',
@@ -52,35 +52,51 @@ class PlaceProvider with ChangeNotifier {
     return _currentStep;
   }
 
+  void _resetProductObj() {
+    object = {
+      'title': '',
+      'type': 1,
+      'description': '',
+      'phone': '',
+      'address': '',
+      'city': '',
+      'open_on_weekend': true,
+      'hr_init': '',
+      'hr_final': '',
+    };
+    step = 0;
+  }
+
   Future<http.StreamedResponse> create(BuildContext context) async {
-    print('ok');
     final requestUrl = Uri.parse("${URLS.BASE_URL}/place");
-    final mimeTypeData =
-        lookupMimeType(_images[0], headerBytes: [0xFF, 0xD8]).split('/');
+    final streamedRequest = http.MultipartRequest('POST', requestUrl);
+    streamedRequest.headers.addAll({"Content-Type": "multipart/form-data"});
 
-    final imageUploaderRequest = http.MultipartRequest('POST', requestUrl);
+    if (_images.isNotEmpty) {
+      print('tem image');
+      final mimeTypeData =
+          lookupMimeType(_images[0], headerBytes: [0xFF, 0xD8]).split('/');
 
-    final images = await http.MultipartFile.fromPath(
-      'images',
-      _images[0],
-      contentType: MediaType(mimeTypeData[0], mimeTypeData[1]),
-    );
+      final images = await http.MultipartFile.fromPath(
+        'images',
+        _images[0],
+        contentType: MediaType(mimeTypeData[0], mimeTypeData[1]),
+      );
+      await streamedRequest.files.add(images);
+    }
 
-    imageUploaderRequest.files.add(images);
-    imageUploaderRequest.headers
-        .addAll({"Content-Type": "multipart/form-data"});
-    imageUploaderRequest.fields['type'] = _createPlace['type'].toString();
-    imageUploaderRequest.fields['title'] = _createPlace['title'];
-    imageUploaderRequest.fields['description'] = _createPlace['description'];
-    imageUploaderRequest.fields['phone'] = _createPlace['phone'];
-    imageUploaderRequest.fields['address'] = _createPlace['address'];
-    imageUploaderRequest.fields['city'] = _createPlace['city'];
-    imageUploaderRequest.fields['open_on_weekend'] =
+    streamedRequest.fields['type'] = _createPlace['type'].toString();
+    streamedRequest.fields['title'] = _createPlace['title'];
+    streamedRequest.fields['description'] = _createPlace['description'];
+    streamedRequest.fields['phone'] = _createPlace['phone'];
+    streamedRequest.fields['address'] = _createPlace['address'];
+    streamedRequest.fields['city'] = _createPlace['city'];
+    streamedRequest.fields['open_on_weekend'] =
         _createPlace['open_on_weekend'].toString();
-    imageUploaderRequest.fields['hr_init'] = _createPlace['hr_init'];
-    imageUploaderRequest.fields['hr_final'] = _createPlace['hr_final'];
+    streamedRequest.fields['hr_init'] = _createPlace['hr_init'];
+    streamedRequest.fields['hr_final'] = _createPlace['hr_final'];
     try {
-      final streamedResponse = await imageUploaderRequest.send();
+      final streamedResponse = await streamedRequest.send();
 
       final response = await http.Response.fromStream(streamedResponse);
 
@@ -90,6 +106,7 @@ class PlaceProvider with ChangeNotifier {
         throw responseBody['error'];
 
       Navigator.pushNamed(context, Routes.CONFIRMATION);
+      _resetProductObj();
     } catch (e) {
       Widget snackBar = SnackBar(
         behavior: SnackBarBehavior.floating,

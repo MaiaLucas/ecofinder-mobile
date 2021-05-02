@@ -1,5 +1,6 @@
 import 'package:ecofinder/providers/product.dart';
 import 'package:ecofinder/screens/profile/addProduct/product_step1.dart';
+import 'package:ecofinder/screens/profile/addProduct/product_step2.dart';
 import 'package:flutter/material.dart';
 import 'package:ecofinder/utils/constants.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,7 @@ class _AddProductState extends State<AddProduct> {
 
     List<Widget> steps = [
       ProductStep1(),
+      ProductStep2(),
     ];
 
     return Scaffold(
@@ -33,7 +35,6 @@ class _AddProductState extends State<AddProduct> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          // color: Colors.amberAccent,
           padding: EdgeInsets.only(top: 25),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

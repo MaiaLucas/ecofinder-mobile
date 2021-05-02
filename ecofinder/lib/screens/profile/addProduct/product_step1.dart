@@ -36,6 +36,7 @@ class _ProductStep1State extends State<ProductStep1> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFormField(
+              initialValue: _titleController.text,
               decoration: InputDecoration(
                 labelText: 'Nome',
                 border: OutlineInputBorder(),
@@ -53,6 +54,7 @@ class _ProductStep1State extends State<ProductStep1> {
             ),
             SizedBox(height: screenHeight * 0.015),
             TextFormField(
+              initialValue: _priceController.text,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: 'Preço (R\$)',
@@ -72,11 +74,17 @@ class _ProductStep1State extends State<ProductStep1> {
             SizedBox(height: screenHeight * 0.015),
             Container(
               child: TextFormField(
+                initialValue: _descriptionController.text,
                 maxLines: 5,
                 decoration: InputDecoration(
                   hintText: "Descrição",
                   border: OutlineInputBorder(),
                 ),
+                onSaved: (String val) {
+                  setState(() {
+                    _description = val;
+                  });
+                },
               ),
             ),
             SizedBox(height: screenHeight * 0.06),

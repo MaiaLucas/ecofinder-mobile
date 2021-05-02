@@ -7,14 +7,12 @@ import 'package:ecofinder/screens/place/detail.dart';
 import 'package:ecofinder/screens/product/detail.dart';
 import 'package:ecofinder/screens/profile/addPlace/index.dart';
 import 'package:ecofinder/screens/profile/addPlace/confirmation.dart';
+import 'package:ecofinder/screens/profile/addProduct/index.dart';
 import 'package:ecofinder/screens/profile/detail.dart';
 import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'screens/profile/addProduct/product_step1.dart';
-import 'screens/profile/addProduct/product_step2.dart';
-import 'screens/profile/addProduct/product_step3.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -65,10 +63,8 @@ class App extends StatelessWidget {
         Routes.PRODUCTDETAIL: (ctx) => ProductDetail(),
         Routes.PROFILEDETAIL: (ctx) => ProfileDetail(),
         Routes.ADDPLACE: (ctx) => AddPlace(),
+        Routes.ADDPRODUCT: (ctx) => AddProduct(),
         Routes.CONFIRMATION: (ctx) => Confirmation(),
-        Routes.PRODUCTSTEP1: (ctx) => ProductStep1(),
-        Routes.PRODUCTSTEP2: (ctx) => ProductStep2(),
-        Routes.PRODUCTSTEP3: (ctx) => ProductStep3(),
         Routes.LOGINRECOVER: (ctx) => LoginRecover(),
       },
     );

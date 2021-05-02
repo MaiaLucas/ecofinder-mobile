@@ -208,6 +208,7 @@ class _PlaceStep3State extends State<PlaceStep3> {
                 ),
                 Buttons(
                   provider: placeProvider,
+                  isLastStep: true,
                   isValid: () {
                     return _formKey.currentState.validate();
                   },
@@ -216,7 +217,7 @@ class _PlaceStep3State extends State<PlaceStep3> {
                     Map<String, dynamic> stepContent = {
                       'hr_init': hrInitStr,
                       'hr_final': hrFinalStr,
-                      'images': image.path,
+                      'images': image != null ? image.path : '',
                       // 'open_on_weekend': isOpen,
                     };
 

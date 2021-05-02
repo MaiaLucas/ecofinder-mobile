@@ -84,7 +84,7 @@ class _ProductStep2State extends State<ProductStep2> {
                   width: 150,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/ecobag.jpg'),
+                      image: AssetImage('assets/ecobag.png'),
                       fit: BoxFit.fill,
                     ),
                   ),

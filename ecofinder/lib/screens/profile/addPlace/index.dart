@@ -49,7 +49,7 @@ class _AddPlaceState extends State<AddPlace> {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     scale: 0.2,
-                    image: AssetImage('assets/map1.png'),
+                    image: AssetImage('assets/map.png'),
                     fit: BoxFit.fill,
                   ),
                 ),

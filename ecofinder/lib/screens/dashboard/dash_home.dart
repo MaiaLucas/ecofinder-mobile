@@ -115,10 +115,16 @@ class _DashHomeState extends State<DashHome> {
             ),
           );
         } else {
-          return Center(
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            color: Constants.BACKGROUND,
+            child: Center(
               child: CircularProgressIndicator(
-            backgroundColor: Color(0xFFC5C5C5),
-          ));
+                backgroundColor: Color(0xFFC5C5C5),
+              ),
+            ),
+          );
         }
       },
     );

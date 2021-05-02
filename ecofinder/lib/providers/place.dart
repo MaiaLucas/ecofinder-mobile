@@ -23,18 +23,19 @@ class PlaceProvider with ChangeNotifier {
 
   List<String> _images = [];
 
-  int _currentStep = 2;
+  int _currentStep = 0;
 
   set image(String image) {
     _images.add(image);
+    notifyListeners();
   }
 
   get imageList {
     return _images;
   }
 
-  set createPlace(Map<String, dynamic> value) {
-    _createPlace = value;
+  set object(Map<String, dynamic> value) {
+    _createPlace = {...createObject, ...value};
     notifyListeners();
   }
 
@@ -43,7 +44,7 @@ class PlaceProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Map<String, dynamic> get createPlaceContent {
+  Map<String, dynamic> get createObject {
     return _createPlace;
   }
 

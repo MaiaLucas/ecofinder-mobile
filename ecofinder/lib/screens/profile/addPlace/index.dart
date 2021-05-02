@@ -18,12 +18,6 @@ class _AddPlaceState extends State<AddPlace> {
     PlaceProvider placeProvider = Provider.of(context);
     final deviceSize = MediaQuery.of(context).size;
 
-    @override
-    void initState() {
-      super.initState();
-      placeProvider.step = 0;
-    }
-
     List<Widget> steps = [
       PlaceStep1(),
       PlaceStep2(),

@@ -16,7 +16,7 @@ class _PlaceStep1State extends State<PlaceStep1> {
     double screenHeight = MediaQuery.of(context).size.height;
     String title = '', description = '', phone = '';
 
-    final content = placeProvider.createPlaceContent;
+    final content = placeProvider.createObject;
 
     TextEditingController _titleController = TextEditingController(
       text: content['title'] != null && content['title'].isNotEmpty
@@ -91,6 +91,7 @@ class _PlaceStep1State extends State<PlaceStep1> {
               ),
               SizedBox(height: screenHeight * 0.06),
               Buttons(
+                provider: placeProvider,
                 isValid: () {
                   return _formKey.currentState.validate();
                 },

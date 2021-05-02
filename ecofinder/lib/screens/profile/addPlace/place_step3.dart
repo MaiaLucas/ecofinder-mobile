@@ -207,6 +207,7 @@ class _PlaceStep3State extends State<PlaceStep3> {
                   height: 15,
                 ),
                 Buttons(
+                  provider: placeProvider,
                   isValid: () {
                     return _formKey.currentState.validate();
                   },

@@ -15,14 +15,10 @@ class _PlaceStep2State extends State<PlaceStep2> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     PlaceProvider placeProvider = Provider.of(context);
-    final content = placeProvider.createPlaceContent;
+    final content = placeProvider.createObject;
 
     String city = '', address = '';
     dynamic type = content['type'] != null ? content['type'] : 1;
-
-    initialValue(val) {
-      return TextEditingController(text: val);
-    }
 
     return Container(
       child: Padding(
@@ -105,6 +101,7 @@ class _PlaceStep2State extends State<PlaceStep2> {
               ),
               SizedBox(height: screenHeight * 0.06),
               Buttons(
+                provider: placeProvider,
                 isValid: () {
                   return _formKey.currentState.validate();
                 },

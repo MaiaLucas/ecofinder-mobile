@@ -1,6 +1,7 @@
-import 'package:ecofinder/utils/routes.dart';
+import 'package:ecofinder/providers/product.dart';
+import 'package:ecofinder/screens/profile/widgets/buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:ecofinder/utils/constants.dart';
+import 'package:provider/provider.dart';
 
 class ProductStep1 extends StatefulWidget {
   @override
@@ -8,75 +9,95 @@ class ProductStep1 extends StatefulWidget {
 }
 
 class _ProductStep1State extends State<ProductStep1> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
+    ProductProvider productProvider = Provider.of(context);
 
-    return Scaffold(
-      backgroundColor: Constants.BACKGROUND,
-      appBar: AppBar(
-        title: Text("Cadastrar novo produto"),
-        backgroundColor: Constants.TOPBOTTOM,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: screenHeight,
-          width: screenWidth,
-          child: Padding(
-            padding: const EdgeInsets.all(40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/ecobag.png'),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.015),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Nome',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.015),
-                Container(
-                  child: TextField(
-                    maxLines: 5,
-                    decoration: InputDecoration(
-                      hintText: "Descrição",
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.015),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Preço (R\$)',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                ),
-                SizedBox(height: screenHeight * 0.06),
-                Container(
-                  width: screenWidth * 0.3,
-                  height: screenHeight * 0.05,
-                  child: ElevatedButton(
-                    child: Text('Avançar', style: TextStyle(fontSize: 20)),
-                    onPressed: () {
-                      Navigator.pushNamed(context, Routes.PRODUCTSTEP2);
-                    },
-                  ),
-                ),
-              ],
+    final content = productProvider.createObject;
+    TextEditingController _titleController = TextEditingController(
+      text: content['title'] != null ? content['title'] : '',
+    );
+    TextEditingController _descriptionController = TextEditingController(
+      text: content['description'] != null ? content['description'] : '',
+    );
+    TextEditingController _priceController = TextEditingController(
+      text: content['price'] != null ? content['price'].toString() : '',
+    );
+
+    String _title, _description, _price;
+
+    return Padding(
+      padding: const EdgeInsets.all(40),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Nome',
+                border: OutlineInputBorder(),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty)
+                  return 'Este campo é obrigatório';
+                return null;
+              },
+              onSaved: (String val) {
+                setState(() {
+                  _title = val;
+                });
+              },
             ),
-          ),
+            SizedBox(height: screenHeight * 0.015),
+            TextFormField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Preço (R\$)',
+                border: OutlineInputBorder(),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty)
+                  return 'Este campo é obrigatório';
+                return null;
+              },
+              onSaved: (String val) {
+                setState(() {
+                  _price = val;
+                });
+              },
+            ),
+            SizedBox(height: screenHeight * 0.015),
+            Container(
+              child: TextFormField(
+                maxLines: 5,
+                decoration: InputDecoration(
+                  hintText: "Descrição",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.06),
+            Buttons(
+              hasBackButton: false,
+              provider: productProvider,
+              isValid: () {
+                return _formKey.currentState.validate();
+              },
+              stepContent: () {
+                _formKey.currentState.save();
+                Map<String, dynamic> stepContent = {
+                  'title': _title,
+                  'price': _price,
+                  'description': _description,
+                };
+
+                return stepContent;
+              },
+            ),
+          ],
         ),
       ),
     );

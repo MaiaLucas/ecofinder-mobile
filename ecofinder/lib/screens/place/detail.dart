@@ -140,19 +140,22 @@ class _PlaceDetailState extends State<PlaceDetail> {
                             Radius.circular(20.0),
                           ),
                         ),
-                        child: ElevatedButton.icon(
-                          icon: Icon(Icons.map_rounded),
-                          onPressed: () {
-                            final url =
-                                "${data.address.replaceAll(' ', '+')},+${data.city.replaceAll(' ', '+')}";
-                            _getCurrentLocation(url);
-                          },
-                          // color: Colors.black38,
-                          label: Text(
-                            "MOSTRAR MAPA",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 15, right: 15),
+                          child: ElevatedButton.icon(
+                            icon: Icon(Icons.map_rounded),
+                            onPressed: () {
+                              final url =
+                                  "${data.address.replaceAll(' ', '+')},+${data.city.replaceAll(' ', '+')}";
+                              _getCurrentLocation(url);
+                            },
+                            // color: Colors.black38,
+                            label: Text(
+                              "MOSTRAR MAPA",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
                             ),
                           ),
                         ),

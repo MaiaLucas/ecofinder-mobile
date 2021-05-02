@@ -32,6 +32,7 @@ class _ProductDetailState extends State<ProductDetail> {
         ModalRoute.of(context).settings.arguments as Map<dynamic, dynamic>;
 
     final deviceSize = MediaQuery.of(context).size;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return FutureBuilder(
       future: ApiService.productDetail(arguments['id']),
@@ -126,7 +127,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                   info: product.description ?? "",
                                   size: 1,
                                   height: 0.15,
-                                  title: 'Sobre',
+                                  title: 'Descrição',
                                   icon: Icon(Icons.info_outline),
                                 )
                               : SizedBox(
@@ -160,17 +161,25 @@ class _ProductDetailState extends State<ProductDetail> {
                                     ),
                               product.instagramAccount != null
                                   ? Container(
+                                      width: screenWidth * 0.5,
                                       margin: EdgeInsets.all(10.0),
                                       decoration: BoxDecoration(
-                                        color: Color(0xFF74c69d),
+                                        color: Colors.lightGreen[900],
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(20.0),
                                         ),
                                       ),
-                                      child: IconButton(
+                                      child: TextButton.icon(
+                                        label: Text(
+                                          "Instagram",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.white),
+                                        ),
                                         icon: Icon(
                                           MdiIcons.fromString('instagram'),
                                           size: 30,
+                                          color: Colors.white,
                                         ),
                                         onPressed: () {
                                           // launchURL(product.instagramAccount)

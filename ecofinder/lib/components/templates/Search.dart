@@ -57,6 +57,8 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Column(
       children: [
         Container(
@@ -204,8 +206,31 @@ class _SearchState extends State<Search> {
                   },
                 ),
               )
-            : Center(
-                child: Text('Vamos começar nossa busca!'),
+            : Padding(
+                padding: EdgeInsets.only(top: screenHeight * 0.2),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 200,
+                      width: 200,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/search.png'),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        'Vamos começar nossa busca!',
+                        style: TextStyle(
+                          color: Colors.white60,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
       ],
     );

@@ -52,7 +52,8 @@ class PlaceProvider with ChangeNotifier {
     return _currentStep;
   }
 
-  Future<http.StreamedResponse> create(context) async {
+  Future<http.StreamedResponse> create(BuildContext context) async {
+    print('ok');
     final requestUrl = Uri.parse("${URLS.BASE_URL}/place");
     final mimeTypeData =
         lookupMimeType(_images[0], headerBytes: [0xFF, 0xD8]).split('/');
@@ -80,17 +81,12 @@ class PlaceProvider with ChangeNotifier {
     imageUploaderRequest.fields['hr_final'] = _createPlace['hr_final'];
     try {
       final streamedResponse = await imageUploaderRequest.send();
-      http.Response.fromStream(streamedResponse);
 
-      final apiResponse = await http.post(
-        requestUrl,
-        body: jsonEncode(_createPlace),
-        headers: {"Content-Type": "application/json"},
-      );
+      final response = await http.Response.fromStream(streamedResponse);
 
-      final responseBody = jsonDecode(apiResponse.body);
+      final responseBody = jsonDecode(response.body);
 
-      if (apiResponse.statusCode != 200 && responseBody['error'])
+      if (response.statusCode != 200 && responseBody['error'])
         throw responseBody['error'];
 
       Navigator.pushNamed(context, Routes.CONFIRMATION);

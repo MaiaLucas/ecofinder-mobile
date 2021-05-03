@@ -1,4 +1,5 @@
 import 'package:ecofinder/providers/place.dart';
+import 'package:ecofinder/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,15 @@ class Buttons extends StatefulWidget {
 class _ButtonState extends State<Buttons> {
   @override
   Widget build(BuildContext context) {
+    void showLoadingIndicator() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Loading();
+        },
+      );
+    }
+
     PlaceProvider placeProvider = Provider.of(context);
     final deviceSize = MediaQuery.of(context).size;
     return Row(
@@ -50,9 +60,10 @@ class _ButtonState extends State<Buttons> {
               if (widget.isValid()) {
                 final content = widget.stepContent();
                 widget.provider.object = content;
-                if (!widget.isLastStep)
+                if (!widget.isLastStep) {
                   widget.provider.step = widget.provider.currentStep + 1;
-                else {
+                } else {
+                  showLoadingIndicator();
                   if (content['images'] != null && content['images'].isNotEmpty)
                     widget.provider.image = content['images'];
 

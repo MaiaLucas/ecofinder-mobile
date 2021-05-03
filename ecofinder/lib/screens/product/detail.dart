@@ -133,68 +133,42 @@ class _ProductDetailState extends State<ProductDetail> {
                               : SizedBox(
                                   width: 0,
                                 ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              product.facebookLink != null
-                                  ? Container(
-                                      margin: EdgeInsets.all(10.0),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFF74c69d),
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(20.0),
-                                        ),
+                          Center(
+                            child: product.instagramAccount != null &&
+                                    product.instagramAccount.isNotEmpty
+                                ? Container(
+                                    width: screenWidth * 0.5,
+                                    margin: EdgeInsets.all(10.0),
+                                    decoration: BoxDecoration(
+                                      color: Colors.lightGreen[900],
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(20.0),
                                       ),
-                                      child: IconButton(
-                                        icon: Icon(
-                                          MdiIcons.fromString('facebook'),
-                                          size: 30,
-                                        ),
-                                        onPressed: () {
-                                          print(product.facebookLink);
-                                          launchURL(product.facebookLink);
-                                        },
-                                      ),
-                                    )
-                                  : SizedBox(
-                                      width: 0,
                                     ),
-                              product.instagramAccount != null
-                                  ? Container(
-                                      width: screenWidth * 0.5,
-                                      margin: EdgeInsets.all(10.0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.lightGreen[900],
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(20.0),
-                                        ),
+                                    child: TextButton.icon(
+                                      label: Text(
+                                        "Instagram",
+                                        style: TextStyle(
+                                            fontSize: 20, color: Colors.white),
                                       ),
-                                      child: TextButton.icon(
-                                        label: Text(
-                                          "Instagram",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white),
-                                        ),
-                                        icon: Icon(
-                                          MdiIcons.fromString('instagram'),
-                                          size: 30,
-                                          color: Colors.white,
-                                        ),
-                                        onPressed: () {
-                                          // launchURL(product.instagramAccount)
-                                          final account = (product
-                                              .instagramAccount
-                                              .replaceAll('@', ''));
-                                          launchURL(
-                                              'https://www.instagram.com/$account/');
-                                        },
+                                      icon: Icon(
+                                        MdiIcons.fromString('instagram'),
+                                        size: 30,
+                                        color: Colors.white,
                                       ),
-                                    )
-                                  : SizedBox(
-                                      width: 0,
+                                      onPressed: () {
+                                        // launchURL(product.instagramAccount)
+                                        final account = (product
+                                            .instagramAccount
+                                            .replaceAll('@', ''));
+                                        launchURL(
+                                            'https://www.instagram.com/$account/');
+                                      },
                                     ),
-                            ],
+                                  )
+                                : SizedBox(
+                                    width: 0,
+                                  ),
                           ),
                         ],
                       ),

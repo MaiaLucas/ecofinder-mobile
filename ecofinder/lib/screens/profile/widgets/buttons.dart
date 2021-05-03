@@ -53,9 +53,9 @@ class _ButtonState extends State<Buttons> {
                 if (!widget.isLastStep)
                   widget.provider.step = widget.provider.currentStep + 1;
                 else {
-                  if (content['images'] != null &&
-                      content['images'].runtimeType != String)
+                  if (content['images'] != null && content['images'].isNotEmpty)
                     widget.provider.image = content['images'];
+
                   widget.provider.create(context);
                 }
               }

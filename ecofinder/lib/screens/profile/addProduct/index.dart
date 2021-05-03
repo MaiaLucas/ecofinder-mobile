@@ -1,6 +1,7 @@
 import 'package:ecofinder/providers/product.dart';
 import 'package:ecofinder/screens/profile/addProduct/product_step1.dart';
 import 'package:ecofinder/screens/profile/addProduct/product_step2.dart';
+import 'package:ecofinder/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:ecofinder/utils/constants.dart';
 import 'package:provider/provider.dart';
@@ -11,9 +12,16 @@ class AddProduct extends StatefulWidget {
 }
 
 class _AddProductState extends State<AddProduct> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override

@@ -11,6 +11,17 @@ class ProductStep1 extends StatefulWidget {
 class _ProductStep1State extends State<ProductStep1> {
   final _formKey = GlobalKey<FormState>();
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     ProductProvider productProvider = Provider.of(context);

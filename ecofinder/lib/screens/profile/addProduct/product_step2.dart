@@ -22,6 +22,12 @@ class _ProductStep2State extends State<ProductStep2> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   pickImage(ImageSource source, ProductProvider provider) async {
     final file = await _picker.getImage(
       source: source,

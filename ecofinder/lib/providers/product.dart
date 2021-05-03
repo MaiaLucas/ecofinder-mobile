@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
 import 'package:http_parser/http_parser.dart';
 
 import 'package:ecofinder/services/urls.dart';
@@ -68,8 +66,9 @@ class ProductProvider with ChangeNotifier {
     await streamedRequest.headers
         .addAll({"Content-Type": "multipart/form-data"});
 
+    print('============================');
+    print(_images);
     if (_images.isNotEmpty) {
-      print('tem image');
       final mimeTypeData =
           lookupMimeType(_images[0], headerBytes: [0xFF, 0xD8]).split('/');
 
@@ -78,7 +77,7 @@ class ProductProvider with ChangeNotifier {
         _images[0],
         contentType: MediaType(mimeTypeData[0], mimeTypeData[1]),
       );
-      await streamedRequest.files.add(images);
+      streamedRequest.files.add(images);
     }
 
     streamedRequest.fields['title'] = _createProduct['title'];

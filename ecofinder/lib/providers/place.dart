@@ -82,7 +82,7 @@ class PlaceProvider with ChangeNotifier {
         _images[0],
         contentType: MediaType(mimeTypeData[0], mimeTypeData[1]),
       );
-      await streamedRequest.files.add(images);
+      streamedRequest.files.add(images);
     }
 
     streamedRequest.fields['type'] = _createPlace['type'].toString();

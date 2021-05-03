@@ -32,7 +32,7 @@ class _ConfirmationState extends State<Confirmation> {
               ),
               SizedBox(height: screenHeight * 0.015),
               Text(
-                "Seu local foi cadastrado com sucesso!",
+                "Seu cadastro foi efetuado com sucesso!",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25,

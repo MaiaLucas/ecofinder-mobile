@@ -6,6 +6,8 @@ import 'package:ecofinder/utils/routes.dart';
 import 'package:ecofinder/utils/store.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 
 class AuthProvider with ChangeNotifier {
   String _userId;
@@ -15,6 +17,26 @@ class AuthProvider with ChangeNotifier {
   Timer _logoutTimer;
 
   String _userData = 'userData';
+  Map<String, dynamic> _editUser = {
+    'email': '',
+    'full_name': '',
+  };
+
+  String _image = '';
+
+  set image(String image) {
+    _image = image;
+    notifyListeners();
+  }
+
+  set data(Map<String, dynamic> value) {
+    _editUser = value;
+  }
+
+  set userData(Map<String, dynamic> value) {
+    _user = User.fromJson(value);
+    notifyListeners();
+  }
 
   bool get isAuth {
     return token != null;
@@ -37,8 +59,6 @@ class AuthProvider with ChangeNotifier {
 
     return null;
   }
-
-  //Responsável pela autenticação do usuário
 
   Future<void> _authenticate(
     Map<String, dynamic> data,
@@ -178,5 +198,45 @@ class AuthProvider with ChangeNotifier {
       throw responseBody['message'];
     }
     _user = User.fromJson(responseBody);
+  }
+
+  Future<void> editUser(BuildContext context) async {
+    final url = Uri.parse("${URLS.BASE_URL}/user/$_userId");
+    final streamedRequest = http.MultipartRequest('PUT', url);
+    streamedRequest.headers.addAll({"Content-Type": "multipart/form-data"});
+
+    if (_image.isNotEmpty) {
+      final mimeTypeData =
+          lookupMimeType(_image, headerBytes: [0xFF, 0xD8]).split('/');
+
+      print(mimeTypeData);
+
+      final image = await http.MultipartFile.fromPath(
+        'avatar',
+        _image,
+        contentType: MediaType(mimeTypeData[0], mimeTypeData[1]),
+      );
+      streamedRequest.files.add(image);
+    }
+
+    streamedRequest.fields['email'] = _editUser['email'];
+    streamedRequest.fields['full_name'] = _editUser['full_name'];
+
+    try {
+      final streamedResponse = await streamedRequest.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      final responseBody = jsonDecode(response.body);
+
+      if (response.statusCode != 200 && responseBody['error']) {
+        throw responseBody['error'];
+      }
+
+      await getUser(_userId);
+
+      Navigator.pop(context);
+    } catch (e) {
+      print(e);
+    }
   }
 }

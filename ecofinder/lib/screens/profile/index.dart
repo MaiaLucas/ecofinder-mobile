@@ -25,7 +25,10 @@ class Profile extends StatelessWidget {
         'alignment': TextAlign.start,
         'icon': CircleAvatar(
           radius: 30,
-          child: Text(user.name[0]),
+          backgroundImage: user.avatar != null && user.avatar.isNotEmpty
+              ? NetworkImage(user.avatar)
+              : null,
+          child: Text(user.avatar == null ? user.name[0] : ''),
           foregroundColor: Colors.white54,
           backgroundColor: Color(0xff38b000),
         ),

@@ -48,6 +48,12 @@ class Profile extends StatelessWidget {
         'icon': Icon(CupertinoIcons.bag_fill, size: 30),
       },
       {
+        'name': 'Seus Cadastros',
+        'action': () => {Navigator.pushNamed(context, Routes.USERREGISTER)},
+        'isDense': true,
+        'icon': Icon(CupertinoIcons.check_mark_circled_solid, size: 30),
+      },
+      {
         'name': 'Sair',
         'isDense': true,
         'icon': Icon(MdiIcons.fromString('location-exit'), size: 30),

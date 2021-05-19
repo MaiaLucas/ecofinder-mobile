@@ -13,5 +13,6 @@ class Routes {
   static const PRODUCTSTEP2 = '/product_step2';
   static const PRODUCTSTEP3 = '/product_step3';
   static const LOGINRECOVER = '/login_redover';
+  static const USERREGISTER = '/user_register';
   static const TESTE = '/';
 }

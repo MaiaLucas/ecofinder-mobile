@@ -9,6 +9,7 @@ import 'package:ecofinder/screens/profile/addPlace/index.dart';
 import 'package:ecofinder/screens/profile/addPlace/confirmation.dart';
 import 'package:ecofinder/screens/profile/addProduct/index.dart';
 import 'package:ecofinder/screens/profile/detail.dart';
+import 'package:ecofinder/screens/profile/userRegister/user_register.dart';
 import 'package:ecofinder/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -66,6 +67,7 @@ class App extends StatelessWidget {
         Routes.ADDPRODUCT: (ctx) => AddProduct(),
         Routes.CONFIRMATION: (ctx) => Confirmation(),
         Routes.LOGINRECOVER: (ctx) => LoginRecover(),
+        Routes.USERREGISTER: (ctx) => UserRegister(),
       },
     );
   }
